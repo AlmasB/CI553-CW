@@ -1,2 +1,2 @@
-# CI553-CW
-CW codebase for CI553
+# 2021-CI553-catshop
+CatShop system release for 2021-CI553 cohort
