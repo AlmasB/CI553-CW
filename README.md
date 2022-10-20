@@ -31,8 +31,8 @@ REPLACE %DERBY_HOME% with the path to the base of the Derby database
 2. Select JDK 17 ([download](https://jdk.java.net/archive/) if not installed).
 3. Run (both of which will fail) `clients.Setup.main()` and `clients.Main.main()`.
 4. Run -> Edit configurations (alt+shift+f10) and:
-- select Setup, modify options -> modify classpath -> add `\lib\derby.jar`
-- select Main, modify options -> modify classpath -> add `\lib\derby.jar`
+- select Setup, modify options -> modify classpath -> add `\lib\derby.jar` (located in lib/db-derby-10.14.2.0-lib/)
+- select Main, modify options -> modify classpath -> add `\lib\derby.jar` (located in lib/db-derby-10.14.2.0-lib/)
 
 ## Run
 
