@@ -27,7 +27,7 @@ REPLACE %DERBY_HOME% with the path to the base of the Derby database
 
 ### IntelliJ 2022.1.4+
 
-1. File -> New project from existing sources -> select CI553-CW.
+1. File -> New project from existing sources -> select CI553-CW. (Click next until complete)
 2. Select JDK 17 ([download](https://jdk.java.net/archive/) if not installed).
 3. Run (both of which will fail) `clients.Setup.main()` and `clients.Main.main()`.
 4. Run -> Edit configurations (alt+shift+f10) and:
