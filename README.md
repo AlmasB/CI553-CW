@@ -14,7 +14,7 @@ Tools -> Preferences -> Libaries
 REPLACE %DERBY_HOME% with the path to the base of the Derby database
 
 ### Eclipse
-To use the Derby database, after importing the jd3.tgz archieve
+To use the Derby database, after importing the project,
 Move the file DataBase.txt to be in the toplevel directory of your project 
 (with src and the JRE System library)
 Copy also the directory Images to the same top level directory as DataBase.txt
