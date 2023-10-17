@@ -57,7 +57,7 @@ public class CustomerView implements Observer
       System.out.println("Exception: " + e.getMessage() );
     }
     Container cp         = rpc.getContentPane();    // Content Pane
-    Container rootWindow = (Container) rpc;         // Root Window
+    JFrame rootWindow = (JFrame) rpc;         // Root Window
     cp.setLayout(null);                             // No layout manager
     rootWindow.setSize( W, H );                     // Size of Window
     rootWindow.setLocation( x, y );
@@ -91,6 +91,15 @@ public class CustomerView implements Observer
     thePicture.setBounds( 16, 25+60*2, 80, 80 );   // Picture area
     cp.add( thePicture );                           //  Add to canvas
     thePicture.clear();
+    
+    Button button = new Button("Expand");
+    button.setBounds(16, 25 + 60 * 3, 80, 40);
+    button.addActionListener((e) -> {
+    	rootWindow.setPreferredSize(new Dimension(500, 500));
+    	rootWindow.pack();
+    });
+    cp.add(button);
+    
     
     rootWindow.setVisible( true );                  // Make visible);
     theInput.requestFocus();                        // Focus is here
