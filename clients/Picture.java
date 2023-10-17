@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
  * @author  Mike Smith University of Brighton
  * @version 1.0
  */
+//
 public class Picture extends Canvas
 {
   private static final long serialVersionUID = 1;
