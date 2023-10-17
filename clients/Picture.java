@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
  * @version 1.0
  */
 //
+//testing merge
 public class Picture extends Canvas
 {
   private static final long serialVersionUID = 1;
