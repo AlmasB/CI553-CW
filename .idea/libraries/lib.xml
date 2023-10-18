@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbytools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_pt_BR.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_it.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_fr.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derby.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyclient.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_zh_CN.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyrun.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_cs.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_pl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_zh_TW.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_ko_KR.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbynet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_de_DE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_hu.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_ja_JP.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_ru.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyoptionaltools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/db-derby-10.14.2.0-lib/lib/derbyLocale_es.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

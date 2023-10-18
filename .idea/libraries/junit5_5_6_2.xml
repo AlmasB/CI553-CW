@@ -1,0 +1,25 @@
+<component name="libraryTable">
+  <library name="junit5-5.6.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-runner-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-testkit-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-jupiter-params-5.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-engine-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-jupiter-engine-5.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-jupiter-api-5.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-suite-api-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-reporting-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-vintage-engine-5.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/apiguardian-api-1.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-jupiter-migrationsupport-5.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-commons-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/opentest4j-1.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-jupiter-5.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-console-standalone-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-console-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit5-5.6.2/junit-platform-launcher-1.6.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
