@@ -2,6 +2,7 @@ package catalogue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Currency;
 import java.util.Formatter;
 import java.util.Locale;
@@ -26,6 +27,15 @@ public class Basket extends ArrayList<Product> implements Serializable
   public Basket()
   {
     theOrderNum  = 0;
+  }
+  
+  /**
+   * Constructor for a basket which takes another baskets
+   * items and adds them to this.
+   * @param collection the other basket to add
+   */
+  public Basket(Collection<Product> collection) {
+	  super(collection);
   }
   
   /**

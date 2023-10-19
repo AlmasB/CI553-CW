@@ -17,6 +17,7 @@ import clients.shopDisplay.DisplayView;
 import clients.warehousePick.PickController;
 import clients.warehousePick.PickModel;
 import clients.warehousePick.PickView;
+import debug.DEBUG;
 import middle.LocalMiddleFactory;
 import middle.MiddleFactory;
 

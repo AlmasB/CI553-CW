@@ -93,7 +93,7 @@ public class PickModel extends Observable
           if ( sb != null )                  //  Order to pick
           {                                  //  T
             theBasket.set(sb);               //   Working on
-            theAction = "Order to pick";     //   what to do
+            theAction = "Order to pick: #" + sb.getOrderNum();     //   what to do
           } else {                           //  F
             worker.free();                   //  Free
             theAction = "";                  // 

@@ -1,6 +1,7 @@
 package clients.warehousePick;
 
 import catalogue.Basket;
+import debug.DEBUG;
 import middle.MiddleFactory;
 import middle.OrderProcessing;
 

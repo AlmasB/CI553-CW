@@ -37,7 +37,18 @@ public class CustomerController
   {
     model.doClear();
   }
-
   
+  public void addToBasket() {
+	  model.addToBasket();
+  }
+  
+  public void removeFromBasket() {
+	  model.removeFromBasket();
+  }
+  
+  
+  public void buyOnline() {
+	  model.buyOnline();
+  }
 }
 

@@ -4,6 +4,7 @@ import catalogue.Basket;
 import catalogue.Product;
 import debug.DEBUG;
 import middle.MiddleFactory;
+import middle.OrderException;
 import middle.OrderProcessing;
 import middle.StockException;
 import middle.StockReader;
@@ -24,7 +25,7 @@ public class CustomerModel extends Observable
   private String      pn = "";                    // Product being processed
 
   private StockReader     theStock     = null;
-  private OrderProcessing theOrder     = null;
+  private OrderProcessing orderProcessing;
   private ImageIcon       thePic       = null;
 
   /*
@@ -36,6 +37,7 @@ public class CustomerModel extends Observable
     try                                          // 
     {  
       theStock = mf.makeStockReader();           // Database access
+      orderProcessing = mf.makeOrderProcessing();
     } catch ( Exception e )
     {
       DEBUG.error("CustomerModel.constructor\n" +
@@ -59,7 +61,6 @@ public class CustomerModel extends Observable
    */
   public void doCheck(String productNum )
   {
-    theBasket.clear();                          // Clear s. list
     String theAction = "";
     pn  = productNum.trim();                    // Product no.
     int    amount  = 1;                         //  & quantity
@@ -67,20 +68,19 @@ public class CustomerModel extends Observable
     {
       if ( theStock.exists( pn ) )              // Stock Exists?
       {                                         // T
-        Product pr = theStock.getDetails( pn ); //  Product
-        if ( pr.getQuantity() >= amount )       //  In stock?
+        theProduct = theStock.getDetails( pn ); //  Product
+        if (theProduct.getQuantity() >= amount )       //  In stock?
         { 
           theAction =                           //   Display 
             String.format( "%s : %7.2f (%2d) ", //
-              pr.getDescription(),              //    description
-              pr.getPrice(),                    //    price
-              pr.getQuantity() );               //    quantity
-          pr.setQuantity( amount );             //   Require 1
-          theBasket.add( pr );                  //   Add to basket
+            		theProduct.getDescription(),              //    description
+            		theProduct.getPrice(),                    //    price
+            		theProduct.getQuantity() );               //    quantity
+          theProduct.setQuantity( amount );             //   Require 1
           thePic = theStock.getImage( pn );     //    product
         } else {                                //  F
           theAction =                           //   Inform
-            pr.getDescription() +               //    product not
+        		  theProduct.getDescription() +               //    product not
             " not in stock" ;                   //    in stock
         }
       } else {                                  // F
@@ -92,7 +92,8 @@ public class CustomerModel extends Observable
       DEBUG.error("CustomerClient.doCheck()\n%s",
       e.getMessage() );
     }
-    setChanged(); notifyObservers(theAction);
+    setChanged(); 
+    notifyObservers(theAction);
   }
 
   /**
@@ -103,8 +104,49 @@ public class CustomerModel extends Observable
     String theAction = "";
     theBasket.clear();                        // Clear s. list
     theAction = "Enter Product Number";       // Set display
+    theProduct = null; // Clear last checked item
     thePic = null;                            // No picture
-    setChanged(); notifyObservers(theAction);
+    setChanged(); 
+    notifyObservers(theAction);
+  }
+  
+  public void addToBasket() {
+	  String action;
+	  if(theProduct == null) {
+		  // Product must not be null, inform the user they have not queried an item
+		  action = "Nothing to add to basket!";
+	  } else {
+		  theBasket.add(theProduct);
+		  action = theProduct.getDescription() + " added to basket!";
+	  }
+	  
+	  setChanged();
+	  notifyObservers(action);
+  }
+  
+  public void removeFromBasket() {
+	  
+  }
+  
+  public void buyOnline() {
+	  String result;
+	  try {
+		  int orderNumber = orderProcessing.uniqueNumber();
+		  theBasket.setOrderNum(orderNumber);
+		  DEBUG.trace("Basket: " + theBasket.getDetails());
+		  orderProcessing.newOrder(theBasket);
+		  result = "Order purchased, order no: " + orderNumber;
+	  } catch(OrderException e) {
+		  DEBUG.error("%s\n%s", "CashierModel.doCancel", e.getMessage());
+		  setChanged(); 
+		  notifyObservers(e.getMessage()); // Notify
+		  return;
+	  }
+	  
+	  // Must make a new basket here as some code may rely on this basket object.
+	  theBasket = makeBasket();
+	  setChanged();
+	  notifyObservers(result);
   }
   
   /**

@@ -36,7 +36,12 @@ public class Order implements OrderProcessing
     public Folder( Basket anOrder )
     {
       stateIs = State.Waiting;
-      basket  = anOrder;
+      // by creating a new basket object here it means that any
+      // previous references to the order no longer have an effect
+      // on this order
+      basket  = new Basket(anOrder);
+      // must retain order number though
+      basket.setOrderNum(anOrder.getOrderNum());
     }
 
     public State getState()                { return this.stateIs; }
@@ -87,7 +92,7 @@ public class Order implements OrderProcessing
   public synchronized void newOrder( Basket bought )
          throws OrderException
   {
-    DEBUG.trace( "DEBUG: New order" );
+    DEBUG.trace( "DEBUG: New order: " + bought.getDetails());
     folders.add( new Folder( bought ) );
     for ( Folder bws : folders )
     {
@@ -109,6 +114,7 @@ public class Order implements OrderProcessing
       if ( bws.getState() == State.Waiting )
       {
         foundWaiting = bws.getBasket();
+        DEBUG.trace("Found waiting: (" + bws.getBasket().getOrderNum() + ") " + bws.getBasket().getDetails());
         bws.newState( State.BeingPicked );
         break;
       }
