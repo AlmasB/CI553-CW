@@ -20,6 +20,10 @@ public class CustomerController
     this.view  = view;
     this.model = model;
   }
+  
+  public void processCheck(String productNumber) {
+	  model.processCheck(productNumber);
+  }
 
   /**
    * Check interaction from view

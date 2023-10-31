@@ -3,6 +3,7 @@ package clients.customer;
 import catalogue.Basket;
 import catalogue.Product;
 import debug.DEBUG;
+import events.Listener;
 import middle.MiddleFactory;
 import middle.OrderException;
 import middle.OrderProcessing;
@@ -19,8 +20,9 @@ import java.util.Observable;
  */
 public class CustomerModel extends Observable
 {
-  private Product     theProduct = null;          // Current product
-  private Basket      theBasket  = null;          // Bought items
+  private Product     product = null;          // Current product
+  private Basket      basket  = null;          // Bought items
+  private Listener<Basket> basketChangeListener;
 
   private String      pn = "";                    // Product being processed
 
@@ -43,7 +45,7 @@ public class CustomerModel extends Observable
       DEBUG.error("CustomerModel.constructor\n" +
                   "Database not created?\n%s\n", e.getMessage() );
     }
-    theBasket = makeBasket();                    // Initial Basket
+    basket = makeBasket();                    // Initial Basket
   }
   
   /**
@@ -52,7 +54,27 @@ public class CustomerModel extends Observable
    */
   public Basket getBasket()
   {
-    return theBasket;
+    return basket;
+  }
+  
+  public Product getProduct() {
+	return product;
+}
+  
+  public void setBasketChangeListener(Listener<Basket> basketChangeListener) {
+	  this.basketChangeListener = basketChangeListener;
+  }
+  
+  public void processCheck(String productNumber) {
+	  try {
+		  if(!theStock.exists(productNumber)) {
+			  return;
+		  }
+		  
+		  doCheck(productNumber);
+	  } catch(StockException e) {
+		  DEBUG.error("CustomerClient.processCheck()\n%s", e.getMessage());
+	  }
   }
 
   /**
@@ -68,19 +90,19 @@ public class CustomerModel extends Observable
     {
       if ( theStock.exists( pn ) )              // Stock Exists?
       {                                         // T
-        theProduct = theStock.getDetails( pn ); //  Product
-        if (theProduct.getQuantity() >= amount )       //  In stock?
+        product = theStock.getDetails( pn ); //  Product
+        if (product.getQuantity() >= amount )       //  In stock?
         { 
           theAction =                           //   Display 
             String.format( "%s : %7.2f (%2d) ", //
-            		theProduct.getDescription(),              //    description
-            		theProduct.getPrice(),                    //    price
-            		theProduct.getQuantity() );               //    quantity
-          theProduct.setQuantity( amount );             //   Require 1
+            		product.getDescription(),              //    description
+            		product.getPrice(),                    //    price
+            		product.getQuantity() );               //    quantity
+          product.setQuantity( amount );             //   Require 1
           thePic = theStock.getImage( pn );     //    product
         } else {                                //  F
           theAction =                           //   Inform
-        		  theProduct.getDescription() +               //    product not
+        		  product.getDescription() +               //    product not
             " not in stock" ;                   //    in stock
         }
       } else {                                  // F
@@ -102,9 +124,9 @@ public class CustomerModel extends Observable
   public void doClear()
   {
     String theAction = "";
-    theBasket.clear();                        // Clear s. list
+    basket.clear();                        // Clear s. list
     theAction = "Enter Product Number";       // Set display
-    theProduct = null; // Clear last checked item
+    product = null; // Clear last checked item
     thePic = null;                            // No picture
     setChanged(); 
     notifyObservers(theAction);
@@ -112,13 +134,15 @@ public class CustomerModel extends Observable
   
   public void addToBasket() {
 	  String action;
-	  if(theProduct == null) {
+	  if(product == null) {
 		  // Product must not be null, inform the user they have not queried an item
 		  action = "Nothing to add to basket!";
 	  } else {
-		  theBasket.add(theProduct);
-		  action = theProduct.getDescription() + " added to basket!";
+		  basket.add(product);
+		  action = product.getDescription() + " added to basket!";
 	  }
+	  
+	  basketChangeListener.onChange(basket);
 	  
 	  setChanged();
 	  notifyObservers(action);
@@ -128,14 +152,25 @@ public class CustomerModel extends Observable
 	  
   }
   
+  /**
+   * The customer client can buy the contents of their basket,
+   * bypassing the cashier and going straight to picking.
+   */
   public void buyOnline() {
 	  String result;
+	  if(basket.isEmpty()) {
+		  result = "Basket is empty";
+		  setChanged();
+		  notifyObservers(result);
+		  return;
+	  }
+	  
 	  try {
 		  int orderNumber = orderProcessing.uniqueNumber();
-		  theBasket.setOrderNum(orderNumber);
-		  DEBUG.trace("Basket: " + theBasket.getDetails());
-		  orderProcessing.newOrder(theBasket);
-		  result = "Order purchased, order no: " + orderNumber;
+		  basket.setOrderNum(orderNumber);
+		  DEBUG.trace("Basket: " + basket.getDetails());
+		  orderProcessing.newOrder(basket);
+		  result = "Order purchased, order no: #" + orderNumber;
 	  } catch(OrderException e) {
 		  DEBUG.error("%s\n%s", "CashierModel.doCancel", e.getMessage());
 		  setChanged(); 
@@ -144,7 +179,7 @@ public class CustomerModel extends Observable
 	  }
 	  
 	  // Must make a new basket here as some code may rely on this basket object.
-	  theBasket = makeBasket();
+	  basket = makeBasket();
 	  setChanged();
 	  notifyObservers(result);
   }

@@ -3,10 +3,15 @@ package clients.customer;
 import catalogue.Basket;
 import catalogue.BetterBasket;
 import clients.Picture;
+import debug.DEBUG;
+import events.SimpleDocumentListener;
 import middle.MiddleFactory;
 import middle.StockReader;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -46,6 +51,8 @@ public class CustomerView implements Observer
   private final JButton addToBasketButton = new JButton(Name.ADD_BASKET);
   private final JButton removeFromBasketButton = new JButton(Name.REMOVE_BASKET);
   private final JButton buyOnlineButton = new JButton(Name.BUY_ONLINE);
+  private final JScrollPane basketScrollPane = new JScrollPane();
+  private final JTextArea basketDisplay = new JTextArea();
 
   private Picture thePicture = new Picture(80,80);
   private StockReader theStock   = null;
@@ -61,7 +68,7 @@ public class CustomerView implements Observer
    * @param y     y-cordinate of position of window on screen  
    */
   
-  public CustomerView( RootPaneContainer rpc, MiddleFactory mf, int x, int y )
+  public CustomerView(CustomerModel model, RootPaneContainer rpc, MiddleFactory mf, int x, int y )
   {
     try                                             // 
     {      
@@ -93,12 +100,19 @@ public class CustomerView implements Observer
     cp.add( theAction );                            //  Add to canvas
 
     theInput.setBounds( 110, 50, 270, 40 );         // Product no area
-    theInput.setText("");                           // Blank
+    theInput.setText("");
+    theInput.getDocument().addDocumentListener(new SimpleDocumentListener() {
+		@Override
+		public void onChange() {
+			cont.processCheck(theInput.getText());
+		}
+	});
     cp.add( theInput );                             //  Add to canvas
     
     theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
     theOutput.setFont( f );                         //  Uses font  
+    theOutput.setEditable(false);
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
 
@@ -135,8 +149,16 @@ public class CustomerView implements Observer
     buyOnlineButton.addActionListener(e -> cont.buyOnline());
     cp.add(buyOnlineButton);
     
+    basketScrollPane.setBounds(110, 290, 270, 160);
+    basketDisplay.setEditable(false);
+    cp.add(basketScrollPane);
+    basketScrollPane.getViewport().add(basketDisplay);
+    
     rootWindow.setVisible( true );                  // Make visible);
     theInput.requestFocus();                        // Focus is here
+    
+    // Setup listeners
+    model.setBasketChangeListener(basket -> updateBasket(basket));
   }
 
    /**
@@ -167,15 +189,19 @@ public class CustomerView implements Observer
     } else {
       thePicture.set( image );             // Display picture
     }
-    theOutput.setText( model.getBasket().getDetails() );
+    theOutput.setText(model.getProduct() == null ? "" : model.getProduct().getDescription() );
     theInput.requestFocus();               // Focus is here
   }
   
-  public void toggleExpandedView(JFrame window, boolean expanded) {
+  private void updateBasket(Basket basket) {
+	  basketDisplay.setText(basket.getDetails());
+  }
+  
+  private void toggleExpandedView(JFrame window, boolean expanded) {
 	  this.expandedView = expanded;
 	  
 	  window.setPreferredSize(new Dimension(W, expanded ? H * 2 : H));
-	  window.pack();
+	  window.pack(); // forces the window to resize
 	  
 	  basketLabel.setVisible(expanded);
 	  addToBasketButton.setVisible(expanded);

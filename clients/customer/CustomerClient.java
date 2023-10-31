@@ -34,7 +34,7 @@ public class CustomerClient
     window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
     
     CustomerModel model = new CustomerModel(mf);
-    CustomerView  view  = new CustomerView( window, mf, 0, 0 );
+    CustomerView  view  = new CustomerView(model, window, mf, 0, 0 );
     CustomerController cont  = new CustomerController( model, view );
     view.setController( cont );
 

@@ -73,7 +73,7 @@ class Main
     Dimension pos = PosOnScrn.getPos();
     
     CustomerModel model      = new CustomerModel(mlf);
-    CustomerView view        = new CustomerView( window, mlf, pos.width, pos.height );
+    CustomerView view        = new CustomerView(model, window, mlf, pos.width, pos.height);
     CustomerController cont  = new CustomerController( model, view );
     view.setController( cont );
 
