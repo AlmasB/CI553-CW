@@ -15,6 +15,7 @@ import java.util.Observable;
  * @author  Mike Smith University of Brighton
  * @version 1.0
  */
+
 public class BackDoorModel extends Observable
 {
   private Basket      theBasket  = null;            // Bought items

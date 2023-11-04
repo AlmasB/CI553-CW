@@ -1,42 +1,52 @@
 package clients;
 
+import clients.backDoor.BackDoorController;
+import clients.backDoor.BackDoorModel;
+import clients.backDoor.BackDoorView;
+import clients.backDoor.BackDoorViewFX;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import middle.LocalMiddleFactory;
+import middle.MiddleFactory;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Create a root layout (StackPane)
-        StackPane root = new StackPane();
+    	 MiddleFactory mlf = new LocalMiddleFactory();
+         primaryStage.setTitle("Main JavaFX Application");
 
-        // Create a scene
-        Scene scene = new Scene(root, 950, 675);
+         BorderPane root = new BorderPane();
+         Scene mainScene = new Scene(root, 800, 600);
 
-        // Apply the CSS file to the scene
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+         // Create and add your BackDoor client components to a subcomponent of the main scene
+         BackDoorModel model = new BackDoorModel(mlf);
+         BackDoorViewFX view = new BackDoorViewFX(mlf);
+         BackDoorController controller = new BackDoorController(model, view);
+         view.setController(controller);
+         
+         VBox mainContent = new VBox();
+         mainContent.getChildren().add(createExistingContent()); // Add your existing content
+         mainContent.getChildren().add(view.getRoot());
 
-        // Set the title of the window
-        primaryStage.setTitle("App");
+         // Add the BackDoorView's root to the center of the main scene
+         root.setLeft(view.getRoot());
 
-        // Disable window resizing
-        primaryStage.setResizable(false);
-
-        // Create a button
-        Button button = new Button("Styled Button");
-        button.getStyleClass().add("button"); // Apply the CSS class
-
-        // Add the button to the root layout
-        root.getChildren().add(button);
-
-        // Set the scene for the stage
-        primaryStage.setScene(scene);
-
-        // Show the stage
-        primaryStage.show();
+         primaryStage.setScene(mainScene);
+         primaryStage.show();
+    }
+    
+    private Pane createExistingContent() {
+        // Implement your existing content here and return it as a Pane
+        Pane existingContent = new Pane();
+        // Add your UI components to existingContent
+        return existingContent;
     }
 
     public static void main(String[] args) {

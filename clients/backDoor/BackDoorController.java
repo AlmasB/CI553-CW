@@ -10,6 +10,7 @@ public class BackDoorController
 {
   private BackDoorModel model = null;
   private BackDoorView  view  = null;
+  private BackDoorViewFX  viewFX  = null;
   /**
    * Constructor
    * @param model The model 
@@ -18,6 +19,11 @@ public class BackDoorController
   public BackDoorController( BackDoorModel model, BackDoorView view )
   {
     this.view  = view;
+    this.model = model;
+  }
+  public BackDoorController( BackDoorModel model, BackDoorViewFX viewFX )
+  {
+    this.viewFX  = viewFX;
     this.model = model;
   }
 
