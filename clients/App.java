@@ -25,7 +25,7 @@ public class App extends Application {
          BorderPane root = new BorderPane();
          Scene mainScene = new Scene(root, 800, 600);
 
-         // Create and add your BackDoor client components to a subcomponent of the main scene
+        
          BackDoorModel model = new BackDoorModel(mlf);
          BackDoorViewFX view = new BackDoorViewFX(mlf);
          BackDoorController controller = new BackDoorController(model, view);
@@ -33,10 +33,10 @@ public class App extends Application {
          model.addObserver( view );
          
          VBox mainContent = new VBox();
-         mainContent.getChildren().add(createExistingContent()); // Add your existing content
+         mainContent.getChildren().add(createExistingContent());
          mainContent.getChildren().add(view.getRoot());
 
-         // Add the BackDoorView's root to the center of the main scene
+         
          root.setLeft(view.getRoot());
 
          primaryStage.setScene(mainScene);
@@ -44,9 +44,7 @@ public class App extends Application {
     }
     
     private Pane createExistingContent() {
-        // Implement your existing content here and return it as a Pane
         Pane existingContent = new Pane();
-        // Add your UI components to existingContent
         return existingContent;
     }
 
