@@ -152,4 +152,3 @@ public class BackDoorModel extends Observable
     return new Basket();
   }
 }
-
