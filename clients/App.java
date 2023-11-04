@@ -30,6 +30,7 @@ public class App extends Application {
          BackDoorViewFX view = new BackDoorViewFX(mlf);
          BackDoorController controller = new BackDoorController(model, view);
          view.setController(controller);
+         model.addObserver( view );
          
          VBox mainContent = new VBox();
          mainContent.getChildren().add(createExistingContent()); // Add your existing content
