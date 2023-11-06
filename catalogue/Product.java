@@ -58,5 +58,22 @@ public class Product implements Serializable
   { 
     theQuantity = aQuantity;
   }
+  
+  /**
+   * Checks if the two products are of the same item type
+   * (But does not need to be same object/memory reference)
+   * @param other product to check
+   * @return true if they are the same item type
+   */
+  public boolean isSameItem(Product other) {
+	  return this.theProductNum.equals(other.getProductNum());
+  }
+  
+  /**
+   * @return a copy of this product in a new object
+   */
+  public Product copy() {
+	  return new Product(theProductNum, theDescription, thePrice, theQuantity);
+  }
 
 }

@@ -48,21 +48,21 @@ class Main
   public void begin()
   {
     //DEBUG.set(true); /* Lots of debug info */
-    MiddleFactory mlf = new LocalMiddleFactory();  // Direct access
+    MiddleFactory mlf = new LocalMiddleFactory(); // Direct access
  
-    startCustomerGUI_MVC( mlf );
+    startCustomerGUI_MVC(mlf);
     if ( many ) 
-     startCustomerGUI_MVC( mlf );
-    startCashierGUI_MVC( mlf );
-    startCashierGUI_MVC( mlf );
-    startBackDoorGUI_MVC( mlf );
+     startCustomerGUI_MVC(mlf);
+    startCashierGUI_MVC(mlf);
+    startCashierGUI_MVC(mlf);
+    startBackDoorGUI_MVC(mlf);
     if ( many ) 
-      startPickGUI_MVC( mlf );
-    startPickGUI_MVC( mlf );
-    startDisplayGUI_MVC( mlf );
+      startPickGUI_MVC(mlf);
+    startPickGUI_MVC(mlf);
+    startDisplayGUI_MVC(mlf);
     if ( many ) 
-      startDisplayGUI_MVC( mlf );
-    startCollectionGUI_MVC( mlf );
+      startDisplayGUI_MVC(mlf);
+    startCollectionGUI_MVC(mlf);
   }
   
   public void startCustomerGUI_MVC(MiddleFactory mlf )

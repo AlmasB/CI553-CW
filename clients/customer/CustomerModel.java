@@ -25,6 +25,7 @@ public class CustomerModel extends Observable
   private Listener<Basket> basketChangeListener;
 
   private String      pn = "";                    // Product being processed
+  private Listener<Boolean> validProductCodeListener;
 
   private StockReader     theStock     = null;
   private OrderProcessing orderProcessing;
@@ -65,9 +66,14 @@ public class CustomerModel extends Observable
 	  this.basketChangeListener = basketChangeListener;
   }
   
+  public void setValidProductCodeListener(Listener<Boolean> validProductCode) {
+	this.validProductCodeListener = validProductCode;
+}
+  
   public void processCheck(String productNumber) {
 	  try {
 		  if(!theStock.exists(productNumber)) {
+			  validProductCodeListener.onChange(false);
 			  return;
 		  }
 		  
@@ -90,7 +96,8 @@ public class CustomerModel extends Observable
     {
       if ( theStock.exists( pn ) )              // Stock Exists?
       {                                         // T
-        product = theStock.getDetails( pn ); //  Product
+        validProductCodeListener.onChange(true);
+    	  product = theStock.getDetails( pn ); //  Product
         if (product.getQuantity() >= amount )       //  In stock?
         { 
           theAction =                           //   Display 

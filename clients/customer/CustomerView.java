@@ -38,11 +38,15 @@ public class CustomerView implements Observer
 
   private static final int H = 300;       // Height of window pixels
   private static final int W = 400;       // Width  of window pixels
+  
+  private static final Color VALID_COLOUR = new Color(0x17CC10);
+  private static final Color INVALID_COLOUR = Color.red;
 
   private final JLabel      theAction  = new JLabel();
   private final JTextField  theInput   = new JTextField();
   private final JTextArea   theOutput  = new JTextArea();
   private final JScrollPane theSP      = new JScrollPane();
+  @Deprecated
   private final JButton     theBtCheck = new JButton( Name.CHECK );
   private final JButton     theBtClear = new JButton( Name.CLEAR );
   private final JButton expandButton = new JButton(Name.EXPAND);
@@ -104,7 +108,12 @@ public class CustomerView implements Observer
     theInput.getDocument().addDocumentListener(new SimpleDocumentListener() {
 		@Override
 		public void onChange() {
-			cont.processCheck(theInput.getText());
+			String text = theInput.getText();
+			if(text.isEmpty()) {
+				cont.doClear();
+			} else {
+				cont.processCheck(text);
+			}
 		}
 	});
     cp.add( theInput );                             //  Add to canvas
@@ -159,6 +168,9 @@ public class CustomerView implements Observer
     
     // Setup listeners
     model.setBasketChangeListener(basket -> updateBasket(basket));
+    model.setValidProductCodeListener(b -> {
+    	theInput.setForeground(b ? VALID_COLOUR : INVALID_COLOUR);
+    });
   }
 
    /**

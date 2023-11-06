@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.Formatter;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * A collection of products from the CatShop.
@@ -61,14 +62,28 @@ public class Basket extends ArrayList<Product> implements Serializable
    * Add a product to the Basket.
    * Product is appended to the end of the existing products
    * in the basket.
+   * Unless the list already contains the product, in which case the product quantity
+   * is increased instead.
    * @param pr A product to be added to the basket
    * @return true if successfully adds the product
    */
   // Will be in the Java doc for Basket
   @Override
-  public boolean add( Product pr )
-  {                              
-    return super.add( pr );     // Call add in ArrayList
+  public boolean add(Product pr) {
+	  // Check if product is already in the list
+	  Optional<Product> optional = stream()
+			  .filter(productInList -> pr.isSameItem(productInList))
+			  .findFirst();
+	  
+	  // If the product is already in the basket, increase the quantity of the product
+	  // instead of adding it to the list again
+	  if(optional.isPresent()) {
+		  Product inList = optional.get();
+		  inList.setQuantity(inList.getQuantity() + pr.getQuantity());
+		  return true;
+	  } else {
+		  return super.add(pr.copy());     // Call add in ArrayList
+	  }
   }
 
   /**
