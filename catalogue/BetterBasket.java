@@ -15,4 +15,10 @@ public class BetterBasket extends Basket implements Serializable
   
 
   // You need to add code here
+  
+  public void repeatedItems() {
+	  if(theQuantity > 1) {
+		  
+	  }
+  }
 }
