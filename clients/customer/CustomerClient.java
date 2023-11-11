@@ -3,6 +3,7 @@ package clients.customer;
 import clients.customer.CustomerController;
 import clients.customer.CustomerModel;
 import clients.customer.CustomerView;
+import com.sun.tools.javac.Main;
 import middle.MiddleFactory;
 import middle.Names;
 import middle.RemoteMiddleFactory;
@@ -14,8 +15,7 @@ import javax.swing.*;
  * @author  Mike Smith University of Brighton
  * @version 2.0
  */
-public class CustomerClient
-{
+public class CustomerClient {
   public static void main (String args[])
   {
     String stockURL = args.length < 1         // URL of stock R
@@ -27,7 +27,7 @@ public class CustomerClient
     displayGUI(mrf);                          // Create GUI
   }
    
-  private static void displayGUI(MiddleFactory mf)
+  public static void displayGUI(MiddleFactory mf)
   {
     JFrame  window = new JFrame();     
     window.setTitle( "Customer Client (MVC RMI)" );

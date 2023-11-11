@@ -1,5 +1,6 @@
 package clients.shopDisplay;
 
+import com.sun.tools.javac.Main;
 import middle.MiddleFactory;
 import middle.Names;
 import middle.RemoteMiddleFactory;
@@ -11,7 +12,7 @@ import javax.swing.*;
  * @author  Mike Smith University of Brighton
  * @version 2.0
  */
-public class DisplayClient
+public class DisplayClient extends Main
 {
    public static void main (String args[])
    {
