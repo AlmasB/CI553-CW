@@ -28,6 +28,7 @@ public class CustomerView implements Observer
   private static final int H = 300;       // Height of window pixels
   private static final int W = 400;       // Width  of window pixels
 
+
   private final JLabel      theAction  = new JLabel();
   private final JTextField  theInput   = new JTextField();
   private final JTextArea   theOutput  = new JTextArea();
