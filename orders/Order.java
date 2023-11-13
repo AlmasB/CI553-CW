@@ -205,6 +205,7 @@ public class Order implements OrderProcessing
   }
 
   /**
+   * 
    * Return the list of order numbers in selected state
    * @param inState The state to find order numbers in
    * @return A list of order numbers

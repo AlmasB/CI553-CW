@@ -1,6 +1,6 @@
 package clients.cashier;
 
-import catalogue.Basket;
+import catalogue.BetterBasket;
 import catalogue.Product;
 import debug.DEBUG;
 import middle.*;
@@ -18,7 +18,7 @@ public class CashierModel extends Observable
 
   private State       theState   = State.process;   // Current state
   private Product     theProduct = null;            // Current product
-  private Basket      theBasket  = null;            // Bought items
+  private BetterBasket      theBasket  = null;            // Bought items
 
   private String      pn = "";                      // Product being processed
 
@@ -44,10 +44,10 @@ public class CashierModel extends Observable
   }
   
   /**
-   * Get the Basket of products
+   * Get the BetterBasket of products
    * @return basket
    */
-  public Basket getBasket()
+  public BetterBasket getBasket()
   {
     return theBasket;
   }
@@ -113,7 +113,7 @@ public class CashierModel extends Observable
             theProduct.getQuantity() );         //
         if ( stockBought )                      // Stock bought
         {                                       // T
-          makeBasketIfReq();                    //  new Basket ?
+          makeBasketIfReq();                    //  new BetterBasket ?
           theBasket.add( theProduct );          //  Add to bought
           theAction = "Purchased " +            //    details
                   theProduct.getDescription();  //
@@ -169,7 +169,7 @@ public class CashierModel extends Observable
   }
   
   /**
-   * make a Basket when required
+   * make a BetterBasket when required
    */
   private void makeBasketIfReq()
   {
@@ -189,12 +189,12 @@ public class CashierModel extends Observable
   }
 
   /**
-   * return an instance of a new Basket
-   * @return an instance of a new Basket
+   * return an instance of a new BetterBasket
+   * @return an instance of a new BetterBasket
    */
-  protected Basket makeBasket()
+  protected BetterBasket makeBasket()
   {
-    return new Basket();
+    return new BetterBasket();
   }
 }
   

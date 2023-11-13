@@ -10,6 +10,7 @@ public class CashierController
 {
   private CashierModel model = null;
   private CashierView  view  = null;
+  private CashierViewFX viewFX = null;
 
   /**
    * Constructor
@@ -19,6 +20,12 @@ public class CashierController
   public CashierController( CashierModel model, CashierView view )
   {
     this.view  = view;
+    this.model = model;
+  }
+  
+  public CashierController( CashierModel model, CashierViewFX viewFX )
+  {
+    this.viewFX  = viewFX;
     this.model = model;
   }
 

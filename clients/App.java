@@ -4,6 +4,9 @@ import clients.backDoor.BackDoorController;
 import clients.backDoor.BackDoorModel;
 import clients.backDoor.BackDoorView;
 import clients.backDoor.BackDoorViewFX;
+import clients.cashier.CashierController;
+import clients.cashier.CashierModel;
+import clients.cashier.CashierViewFX;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,21 +26,33 @@ public class App extends Application {
          primaryStage.setTitle("Main JavaFX Application");
 
          BorderPane root = new BorderPane();
-         Scene mainScene = new Scene(root, 800, 600);
+         root.setStyle("-fx-background-color: #F8C8DC");
+         Scene mainScene = new Scene(root, 1000, 750);
 
         
-         BackDoorModel model = new BackDoorModel(mlf);
-         BackDoorViewFX view = new BackDoorViewFX(mlf);
-         BackDoorController controller = new BackDoorController(model, view);
-         view.setController(controller);
-         model.addObserver( view );
+         BackDoorModel backDoorModel = new BackDoorModel(mlf);
+         BackDoorViewFX backDoorView = new BackDoorViewFX(mlf);
+         BackDoorController backDoorController = new BackDoorController(backDoorModel, backDoorView);
+         backDoorView.setController(backDoorController);
+         backDoorModel.addObserver( backDoorView );
+         VBox backDoorContent = new VBox();
+         backDoorContent.getChildren().add(createExistingContent());
+         backDoorContent.getChildren().add(backDoorView.getRoot());
+         root.setTop(backDoorView.getRoot());
          
-         VBox mainContent = new VBox();
-         mainContent.getChildren().add(createExistingContent());
-         mainContent.getChildren().add(view.getRoot());
-
+         CashierModel cashierModel = new CashierModel(mlf);
+         CashierViewFX cashierView = new CashierViewFX(mlf);
+         CashierController cashierController = new CashierController(cashierModel, cashierView);
+         cashierView.setController(cashierController);
+         cashierModel.addObserver( cashierView );
+         VBox cashierContent = new VBox();
+         cashierContent.getChildren().add(createExistingContent());
+         cashierContent.getChildren().add(cashierView.getRoot());
+         cashierContent.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
+         root.setBottom(cashierView.getRoot());
          
-         root.setLeft(view.getRoot());
+         
+         
 
          primaryStage.setScene(mainScene);
          primaryStage.show();
