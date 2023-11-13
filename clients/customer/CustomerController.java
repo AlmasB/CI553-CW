@@ -9,6 +9,7 @@ public class CustomerController
 {
   private CustomerModel model = null;
   private CustomerView  view  = null;
+  private CustomerViewFX viewFX = null;
 
   /**
    * Constructor
@@ -18,6 +19,12 @@ public class CustomerController
   public CustomerController( CustomerModel model, CustomerView view )
   {
     this.view  = view;
+    this.model = model;
+  }
+  
+  public CustomerController( CustomerModel model, CustomerViewFX viewFX )
+  {
+    this.viewFX  = viewFX;
     this.model = model;
   }
 
