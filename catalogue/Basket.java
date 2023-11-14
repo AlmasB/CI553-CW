@@ -85,6 +85,50 @@ public class Basket extends ArrayList<Product> implements Serializable
 		  return super.add(pr.copy());     // Call add in ArrayList
 	  }
   }
+  
+  @Override
+	public boolean remove(Object o) {
+	  if(!(o instanceof Product)) return false;
+	  
+	  // The object passed will not be the same as the one stored in list,
+	  // as a copy is made before adding the product to the list,
+	  // therefore we need to check by item type
+	  Optional<Product> optional = stream()
+			  .filter(productInList -> productInList.isSameItem((Product) o))
+			  .findFirst();
+	  
+	  // Product was not found in the list
+	  if(optional.isEmpty()) return false;
+	  
+	  // Removes the item
+	  return super.remove(optional.get());
+	}
+  
+  /**
+   * Will decrease the quantity of the product in the list by one
+   * If the quantity of the product becomes zero, the product will be removed from the list
+   * @param pr - the product to decrease
+   * @return true if the product was removed or the quantity decreased
+   */
+  public boolean decreaseProductQuantity(Product pr) {
+	  // Find the product in the list that matches this product
+	  Optional<Product> optional = stream()
+			  .filter(productInList -> pr.isSameItem(productInList))
+			  .findFirst();
+	  
+	  // Product is not in the list, so could not be decreased
+	  if(optional.isEmpty()) return false;
+	  
+	  Product productInList = optional.get();
+	  // Check if quantity is already one (if so, remove)
+	  if(productInList.getQuantity() <= 1) {
+		  return remove(productInList);
+	  }
+	  
+	  // Decrease count and return true
+	  productInList.setQuantity(productInList.getQuantity() - 1);
+	  return true;
+  }
 
   /**
    * Returns a description of the products in the basket suitable for printing.
@@ -118,5 +162,9 @@ public class Basket extends ArrayList<Product> implements Serializable
       fr.close();
     }
     return sb.toString();
+  }
+  
+  public BasketDetails getBasketDetails() {
+	  return new BasketDetails(this);
   }
 }

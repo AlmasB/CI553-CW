@@ -1,5 +1,7 @@
 package middle;
 
+import java.util.List;
+
 import catalogue.Product;
 
 /**
@@ -19,6 +21,16 @@ public interface StockReadWriter extends StockReader
    * @throws middle.StockException if issue
    */
   boolean buyStock(String pNum, int amount) throws StockException;
+  
+  /**
+   * Tries to buy all of the stock in the list. Will buy as many products as possible and ignore
+   * products that are out of stock. 
+   * @param list The list of products to buy
+   * @return A list containing all the products that could not be bought.
+   * 	 	 If the list is empty, all products have been bought
+   * @throws StockException If an error occurred while buying stock
+   */
+  List<Product> buyAllStock(List<Product> list) throws StockException;
 
   /**
    * Adds stock (Restocks) to store.

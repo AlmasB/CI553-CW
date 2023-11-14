@@ -8,7 +8,9 @@ import middle.MiddleFactory;
 import middle.OrderException;
 import middle.OrderProcessing;
 import middle.StockException;
+import middle.StockReadWriter;
 import middle.StockReader;
+import util.Pair;
 
 import javax.swing.*;
 import java.util.Observable;
@@ -22,13 +24,14 @@ public class CustomerModel extends Observable
 {
   private Product     product = null;          // Current product
   private Basket      basket  = null;          // Bought items
-  private Listener<Basket> basketChangeListener;
+  private int selectedBasketIndex = 0; // The index of the item currently selected in the basket
+  private Listener<Pair<Basket, Integer>> basketChangeListener;
 
   private String      pn = "";                    // Product being processed
   private Listener<Boolean> validProductCodeListener;
 
-  private StockReader     theStock     = null;
-  private OrderProcessing orderProcessing;
+  private final StockReadWriter stockReader;
+  private final OrderProcessing orderProcessing;
   private ImageIcon       thePic       = null;
 
   /*
@@ -39,12 +42,13 @@ public class CustomerModel extends Observable
   {
     try                                          // 
     {  
-      theStock = mf.makeStockReader();           // Database access
+      //stockReader = mf.makeStockReader();           // Database access
       orderProcessing = mf.makeOrderProcessing();
     } catch ( Exception e )
     {
       DEBUG.error("CustomerModel.constructor\n" +
                   "Database not created?\n%s\n", e.getMessage() );
+      throw new RuntimeException(e);
     }
     basket = makeBasket();                    // Initial Basket
   }
@@ -62,7 +66,7 @@ public class CustomerModel extends Observable
 	return product;
 }
   
-  public void setBasketChangeListener(Listener<Basket> basketChangeListener) {
+  public void setBasketChangeListener(Listener<Pair<Basket, Integer>> basketChangeListener) {
 	  this.basketChangeListener = basketChangeListener;
   }
   
@@ -72,7 +76,7 @@ public class CustomerModel extends Observable
   
   public void processCheck(String productNumber) {
 	  try {
-		  if(!theStock.exists(productNumber)) {
+		  if(!stockReader.exists(productNumber)) {
 			  validProductCodeListener.onChange(false);
 			  return;
 		  }
@@ -94,10 +98,10 @@ public class CustomerModel extends Observable
     int    amount  = 1;                         //  & quantity
     try
     {
-      if ( theStock.exists( pn ) )              // Stock Exists?
+      if ( stockReader.exists( pn ) )              // Stock Exists?
       {                                         // T
         validProductCodeListener.onChange(true);
-    	  product = theStock.getDetails( pn ); //  Product
+    	  product = stockReader.getDetails( pn ); //  Product
         if (product.getQuantity() >= amount )       //  In stock?
         { 
           theAction =                           //   Display 
@@ -106,7 +110,7 @@ public class CustomerModel extends Observable
             		product.getPrice(),                    //    price
             		product.getQuantity() );               //    quantity
           product.setQuantity( amount );             //   Require 1
-          thePic = theStock.getImage( pn );     //    product
+          thePic = stockReader.getImage( pn );     //    product
         } else {                                //  F
           theAction =                           //   Inform
         		  product.getDescription() +               //    product not
@@ -145,18 +149,42 @@ public class CustomerModel extends Observable
 		  // Product must not be null, inform the user they have not queried an item
 		  action = "Nothing to add to basket!";
 	  } else {
-		  basket.add(product);
-		  action = product.getDescription() + " added to basket!";
+		  if(stockReader.getProductStockLevel(product.getProductNum()) > 0) {
+			  basket.add(product);
+			  action = product.getDescription() + " added to basket!";
+		  } else {
+			  action = "Product is out of stock!";
+		  }
 	  }
 	  
-	  basketChangeListener.onChange(basket);
+	  basketChangeListener.onChange(new Pair<>(basket, selectedBasketIndex));
 	  
 	  setChanged();
 	  notifyObservers(action);
   }
   
   public void removeFromBasket() {
+	  String action;
+	  if(basket.isEmpty()) {
+		  action = "Nothing to remove from the basket!";
+		  setChanged();
+		  notifyObservers(action);
+		  return;
+	  }
 	  
+	  if(selectedBasketIndex < 0 || selectedBasketIndex >= basket.size()) {
+		  action = "Select a product to remove using arrow keys.";
+		  setChanged();
+		  notifyObservers(action);
+		  return;
+	  }
+	  
+	  basket.decreaseProductQuantity(basket.get(selectedBasketIndex));
+	  // Bound the index to the size of the basket
+	  if(selectedBasketIndex >= basket.size()) 
+		  selectedBasketIndex = basket.size();
+	  
+	  basketChangeListener.onChange(new Pair<>(basket, selectedBasketIndex));
   }
   
   /**
@@ -173,6 +201,9 @@ public class CustomerModel extends Observable
 	  }
 	  
 	  try {
+		  // Try buy the stock first
+		  stockReader
+		  
 		  int orderNumber = orderProcessing.uniqueNumber();
 		  basket.setOrderNum(orderNumber);
 		  DEBUG.trace("Basket: " + basket.getDetails());
@@ -187,8 +218,17 @@ public class CustomerModel extends Observable
 	  
 	  // Must make a new basket here as some code may rely on this basket object.
 	  basket = makeBasket();
+	  basketChangeListener.onChange(new Pair<>(basket, (selectedBasketIndex = -1)));
 	  setChanged();
 	  notifyObservers(result);
+  }
+  
+  public void decreaseSelectedBasketIndex() {
+	  this.selectedBasketIndex = Math.max(0, --selectedBasketIndex);
+  }
+  
+  public void increaseSelectedBasketIndex() {
+	  this.selectedBasketIndex = Math.min(basket.size() - 1, ++selectedBasketIndex);
   }
   
   /**
@@ -201,7 +241,7 @@ public class CustomerModel extends Observable
   }
   
   /**
-   * ask for update of view callled at start
+   * ask for update of view called at start
    */
   private void askForUpdate()
   {

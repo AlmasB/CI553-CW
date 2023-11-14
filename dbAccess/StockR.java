@@ -71,6 +71,10 @@ public class StockR implements StockReader
   {
     return theStmt;
   }
+  
+  protected PreparedStatement getPreparedStatement(String sql) throws SQLException {
+	  return theCon.prepareStatement(sql);
+  }
 
   /**
    * Returns a connection object that is used to process
@@ -139,6 +143,27 @@ public class StockR implements StockReader
     {
       throw new StockException( "SQL getDetails: " + e.getMessage() );
     }
+  }
+  
+  /**
+   * Returns the stock level of a product
+   * @param productNumber The product number
+   * @return The product stock level
+   */
+  public synchronized int getProductStockLevel(String productNumber) {
+	  try {
+		  ResultSet results = getStatementObject().executeQuery(
+				  "SELECT stockLevel FROM StockTable " +
+				  "WHERE StockTable.productNo = '" + productNumber + "'"
+				  );
+		  
+		  if(results.next()) {
+			  return results.getInt("stockLevel");
+		  }
+	  } catch(SQLException e) {
+		  DEBUG.error("SQLException when getting product stock level for product: %s", productNumber);
+	  }
+	  return -1;
   }
 
   /**

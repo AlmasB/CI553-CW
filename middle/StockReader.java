@@ -30,6 +30,13 @@ public interface StockReader
   
   Product getDetails(String pNum) throws StockException;
   
+  /**
+   * Returns the stock level of a product
+   * @param productNumber The product number
+   * @return The product stock level
+   */
+  int getProductStockLevel(String productNumber);
+  
   
   /**
    * Returns an image of the product in the stock list

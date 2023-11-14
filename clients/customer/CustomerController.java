@@ -54,5 +54,13 @@ public class CustomerController
   public void buyOnline() {
 	  model.buyOnline();
   }
+  
+  public void decreaseSelectedIndex() {
+	  model.decreaseSelectedBasketIndex();
+  }
+  
+  public void increaseSelectedIndex() {
+	  model.increaseSelectedBasketIndex();
+  }
 }
 

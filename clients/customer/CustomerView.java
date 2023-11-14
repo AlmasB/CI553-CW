@@ -4,15 +4,21 @@ import catalogue.Basket;
 import catalogue.BetterBasket;
 import clients.Picture;
 import debug.DEBUG;
+import events.ArrowKeyListener;
 import events.SimpleDocumentListener;
 import middle.MiddleFactory;
 import middle.StockReader;
+import util.Pair;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -41,6 +47,7 @@ public class CustomerView implements Observer
   
   private static final Color VALID_COLOUR = new Color(0x17CC10);
   private static final Color INVALID_COLOUR = Color.red;
+  private static final Color HIGHLIGHT_COLOUR = new Color(0xffff66);
 
   private final JLabel      theAction  = new JLabel();
   private final JTextField  theInput   = new JTextField();
@@ -86,6 +93,18 @@ public class CustomerView implements Observer
     cp.setLayout(null);                             // No layout manager
     rootWindow.setSize( W, H );                     // Size of Window
     rootWindow.setLocation( x, y );
+    rootWindow.addKeyListener(new ArrowKeyListener() {
+		@Override
+		public void arrowUp() {
+			System.out.println("Arrow uo");
+			cont.decreaseSelectedIndex();
+			
+		}
+		@Override
+		public void arrowDown() {
+			cont.increaseSelectedIndex();
+		}
+	});
 
     Font f = new Font("Monospaced",Font.PLAIN,12);  // Font f is
 
@@ -167,7 +186,7 @@ public class CustomerView implements Observer
     theInput.requestFocus();                        // Focus is here
     
     // Setup listeners
-    model.setBasketChangeListener(basket -> updateBasket(basket));
+    model.setBasketChangeListener(pair -> updateBasket(pair.getKey(), pair.getValue()));
     model.setValidProductCodeListener(b -> {
     	theInput.setForeground(b ? VALID_COLOUR : INVALID_COLOUR);
     });
@@ -205,8 +224,19 @@ public class CustomerView implements Observer
     theInput.requestFocus();               // Focus is here
   }
   
-  private void updateBasket(Basket basket) {
+  private void updateBasket(Basket basket, int selectedIndex) {
 	  basketDisplay.setText(basket.getDetails());
+	  if(basket.isEmpty()) return;
+	  
+	  Pair<Integer, Integer> indexes = basket.getBasketDetails()
+			  .getProductIndexes(basket.get(selectedIndex));
+	  basketDisplay.getHighlighter().removeAllHighlights();
+	  try {
+		basketDisplay.getHighlighter().addHighlight(indexes.getKey(), indexes.getValue(), 
+				  new DefaultHighlighter.DefaultHighlightPainter(HIGHLIGHT_COLOUR));
+	} catch (BadLocationException e) {
+		e.printStackTrace();
+	}
   }
   
   private void toggleExpandedView(JFrame window, boolean expanded) {

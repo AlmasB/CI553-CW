@@ -12,7 +12,12 @@ import debug.DEBUG;
 import middle.StockException;
 import middle.StockReadWriter;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 // There can only be 1 ResultSet opened per statement
 // so no simultaneous use of the statement object
@@ -58,6 +63,40 @@ public class StockRW extends StockR implements StockReadWriter
     DEBUG.trace( "buyStock() updates -> %n", updates );
     return updates > 0;   // sucess ?
   }
+  
+  	@Override
+	public List<Product> buyAllStock(List<Product> list) throws StockException {
+  		List<Product> resultingList = new ArrayList<>();
+		try {
+			PreparedStatement statement = getPreparedStatement(
+					"UPDATE StockTable "
+					+ "SET stockLevel = stockLevel-? " 
+					+ "WHERE productNo = ? AND stockLevel >= ?"
+					);
+			
+			// Add all update statements for each product to a batch statement
+			for(Product product : list) {
+				statement.setInt(1, product.getQuantity());
+				statement.setString(2, product.getProductNum());
+				statement.setInt(3, product.getQuantity());
+				statement.addBatch();
+			}
+			
+			int[] results = statement.executeBatch();
+			for(int i = 0; i < results.length; i++) {
+				if(results[i] == 0) {
+					// The table has not been updated
+					// So no stock has been purchased, 
+					// so add this product to the list
+					resultingList.add(list.get(i));
+				}
+			}
+			
+		} catch(SQLException e) {
+			throw new StockException("SQLException on buy all stock");
+		}
+		return resultingList;
+	}
 
   /**
    * Adds stock (Re-stocks) to the store.
