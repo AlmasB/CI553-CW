@@ -62,10 +62,10 @@ class Main
     frame.setVisible(true);
 
     //button event listeners
-
     buttonCustomer.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        frame.dispose(); // close window
         CustomerClient obj = new CustomerClient(); // creates new CustomerClient object
         obj.displayGUI(mlf); // display gui
       }
@@ -82,12 +82,6 @@ class Main
   public static void main(String[] args) {
     startup(); //run the program
   }
-
-
-
-
-
-
 
 
   /**
@@ -216,6 +210,19 @@ class Main
 
     model.addObserver( view );        //Add observer to the model
     window.setVisible(true);          //Make window visible
+  }
+
+  public void startEmployeeGUI_MVC(MiddleFactory mlf){
+    Main startGUIs = new Main(); // new object
+
+    // start GUIs that employees may need
+    startGUIs.startCashierGUI_MVC( mlf );
+    startGUIs.startCashierGUI_MVC( mlf );
+    startGUIs.startBackDoorGUI_MVC( mlf );
+    startGUIs.startPickGUI_MVC(mlf);
+    startGUIs.startPickGUI_MVC( mlf );
+    startGUIs.startDisplayGUI_MVC( mlf );
+    startGUIs.startCollectionGUI_MVC( mlf );
   }
 
 }

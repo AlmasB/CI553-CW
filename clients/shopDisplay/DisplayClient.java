@@ -12,7 +12,7 @@ import javax.swing.*;
  * @author  Mike Smith University of Brighton
  * @version 2.0
  */
-public class DisplayClient extends Main
+public class DisplayClient
 {
    public static void main (String args[])
    {

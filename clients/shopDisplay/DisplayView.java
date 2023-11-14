@@ -128,7 +128,7 @@ public class DisplayView extends Canvas implements Observer
  
   public void drawActualScreen( Graphics2D g )  // Re draw contents 
   {
-    g.setPaint( Color.red );            // Paint Colour
+    g.setPaint( Color.getHSBColor(40, 33, 100) );            // Paint Colour
     W = getWidth(); H = getHeight();      // Current size
     
     g.setFont( font );
