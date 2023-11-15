@@ -46,4 +46,11 @@ public class CashierController
   {
     model.doBought();
   }
+  
+  /**
+   * Remove interaction from view
+   */
+  public void doRemove() {
+	  model.doRemove();
+  }
 }

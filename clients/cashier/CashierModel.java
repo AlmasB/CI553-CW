@@ -158,6 +158,25 @@ public class CashierModel extends Observable
     theBasket = null;
     setChanged(); notifyObservers(theAction); // Notify
   }
+  
+  /**
+   * Cashier Removes item from Order
+   */
+  public void doRemove() {
+	  DEBUG.trace("Remove accessed");
+	    String theAction = "";
+	    System.out.println(theState);
+	    if (theBasket != null && theState == State.checked) {
+		    theBasket.remove( theProduct );
+		    theAction = "Removed " + theProduct.getDescription() + " from the basket";
+		    theBasket = null;
+		    theState = State.process;
+		} else {
+		    theAction = "No item to remove or item cannot be removed";
+		}
+	    setChanged(); notifyObservers(theAction);
+	}
+  
 
   /**
    * ask for update of view callled at start of day

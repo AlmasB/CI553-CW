@@ -23,6 +23,8 @@ public class CashierView implements Observer
   private static final String CHECK  = "Check";
   private static final String BUY    = "Buy";
   private static final String BOUGHT = "Bought";
+  // Creating the string for the Remove button
+  private static final String REMOVE = "Remove";
 
   private final JLabel      theAction  = new JLabel();
   private final JTextField  theInput   = new JTextField();
@@ -31,7 +33,8 @@ public class CashierView implements Observer
   private final JButton     theBtCheck = new JButton( CHECK );
   private final JButton     theBtBuy   = new JButton( BUY );
   private final JButton     theBtBought= new JButton( BOUGHT );
-
+  // Creating the Remove button
+  private final JButton     theBtRemove= new JButton( REMOVE );
   private StockReadWriter theStock     = null;
   private OrderProcessing theOrder     = null;
   private CashierController cont       = null;
@@ -70,7 +73,14 @@ public class CashierView implements Observer
     theBtBuy.setBounds( 16, 25+60*1, 80, 40 );      // Buy button 
     theBtBuy.addActionListener(                     // Call back code
       e -> cont.doBuy() );
-    cp.add( theBtBuy );                             //  Add to canvas
+    cp.add( theBtBuy ); 
+    
+    // This will add the button to the canvas.
+    theBtRemove.setBounds( 16, 25+60*2, 80, 40);
+    theBtRemove.addActionListener(
+    		e -> cont.doRemove() );
+    cp.add( theBtRemove );
+    
 
     theBtBought.setBounds( 16, 25+60*3, 80, 40 );   // Clear Button
     theBtBought.addActionListener(                  // Call back code
