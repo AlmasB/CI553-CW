@@ -170,5 +170,21 @@ class Main
     model.addObserver( view );       // Add observer to the model
     window.setVisible(true);         // Make window visible
   }
+  
+  public void startSettingsGUI_MVC(MiddleFactory mlf) {
+    JFrame  window = new JFrame();
+
+    window.setTitle( "Settings Client MVC");
+    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+    Dimension pos = PosOnScrn.getPos();
+    
+    SettingsModel model      = new SettingsModel(mlf);
+    SettingsView view        = new SettingsView( window, mlf, pos.width, pos.height );
+    SettingsController cont  = new SettingsController( model, view );
+    view.setController( cont );
+
+    model.addObserver( view );       // Add observer to the model
+    window.setVisible(true);         // Make window visible
+  }
 
 }
