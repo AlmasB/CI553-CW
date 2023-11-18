@@ -133,4 +133,7 @@ public class CustomerModel extends Observable
     return new Basket();
   }
 }
-
+  //reservation function
+// public void doReserve(){
+  
+// }

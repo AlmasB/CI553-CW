@@ -16,12 +16,12 @@ class Setup
 {
   private static String[] sqlStatements = {
 
-//  " SQL code to set up database tables",
+  //  " SQL code to set up database tables",
 
-//  "drop table ProductList",
+  //  "drop table ProductList",
 //  "drop table StockList",
 
-
+  // Product table
   "drop table ProductTable",
   "create table ProductTable ("+
       "productNo      Char(4)," +
@@ -46,6 +46,8 @@ class Setup
 //  "select * from ProductTable",
 
 
+  
+  //stock table
   "drop table StockTable",
   "create table StockTable ("+
       "productNo      Char(4)," +
@@ -62,7 +64,9 @@ class Setup
   "select * from StockTable, ProductTable " +
           " where StockTable.productNo = ProductTable.productNo"
 
- };
+  // reservation table
+ 
+  };
 
   public static void main(String[] args)
   {

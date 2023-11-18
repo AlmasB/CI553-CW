@@ -38,6 +38,11 @@ public class CustomerController
     model.doClear();
   }
 
+  public void doReserve(){
+    System.out.println("test1");
+    
+  }
+
   
 }
 

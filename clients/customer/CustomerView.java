@@ -23,6 +23,7 @@ public class CustomerView implements Observer
   {
     public static final String CHECK  = "Check";
     public static final String CLEAR  = "Clear";
+    public static final String RESERVE  = "Reserve";
   }
 
   private static final int H = 300;       // Height of window pixels
@@ -34,6 +35,7 @@ public class CustomerView implements Observer
   private final JScrollPane theSP      = new JScrollPane();
   private final JButton     theBtCheck = new JButton( Name.CHECK );
   private final JButton     theBtClear = new JButton( Name.CLEAR );
+  private final JButton     theBtReserve = new JButton( Name.RESERVE );
 
   private Picture thePicture = new Picture(80,80);
   private StockReader theStock   = null;
@@ -74,6 +76,19 @@ public class CustomerView implements Observer
       e -> cont.doClear() );
     cp.add( theBtClear );                           //  Add to canvas
 
+    //reserve function
+    theBtReserve.setBounds( 16, 25+60*2, 80, 40 );    // reserve button
+    theBtReserve.addActionListener(                   // action
+      e -> cont.doReserve() );
+      // System.out.println("test1")
+    cp.add( theBtReserve );   
+
+
+
+
+
+
+
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area
     theAction.setText( "" );                        //  Blank
     cp.add( theAction );                            //  Add to canvas
@@ -88,7 +103,7 @@ public class CustomerView implements Observer
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
 
-    thePicture.setBounds( 16, 25+60*2, 80, 80 );   // Picture area
+    thePicture.setBounds( 16, 25+60*3, 80, 80 );   // Picture area
     cp.add( thePicture );                           //  Add to canvas
     thePicture.clear();
     
