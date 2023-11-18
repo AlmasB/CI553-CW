@@ -29,6 +29,9 @@ import javafx.geometry.*;
 import middle.MiddleFactory;
 
 public class App extends Application {
+	
+	private int GRID_WIDTH = 1000;
+	private int GIRD_HEIGHT = 750;
 
     @Override
     public void start(Stage primaryStage) {
@@ -39,42 +42,50 @@ public class App extends Application {
          root.setHgap(5);
          root.setVgap(5);
          root.setPadding(new Insets(0, 5, 0, 5));
-        // root.setStyle("-fx-background-color: #F8C8DC");
+      //   root.setStyle("-fx-background-color: #F8C8DC");
          
          GridPane groupCustomer = new GridPane();
          groupCustomer.setHgap(5);
          groupCustomer.setVgap(5);
          groupCustomer.setPadding(new Insets(0, 5, 0, 5));
-         groupCustomer.setStyle("-fx-background-color: #F8C8DC");
+      //   groupCustomer.setStyle("-fx-background-color: #F8C8DC");
          
          
          GridPane groupEmployee = new GridPane();
          groupEmployee.setHgap(5);
          groupEmployee.setVgap(5);
          groupEmployee.setPadding(new Insets(0, 5, 0, 5));
-         groupEmployee.setStyle("-fx-background-color: #F8C8DC");
+      //   groupEmployee.setStyle("-fx-background-color: #F8C8DC");
          
-         Scene mainScene = new Scene(root, 1000, 750);
+         Scene mainScene = new Scene(root, GRID_WIDTH, GIRD_HEIGHT);
+      //   mainScene.getStylesheets().add("style.css");
        
-         Scene customerScene = new Scene(groupCustomer,1000,750);
+         Scene customerScene = new Scene(groupCustomer,GRID_WIDTH,GIRD_HEIGHT);
         
-         Scene employeeScene = new Scene(groupEmployee, 1000, 750);
-         groupEmployee.setStyle("-fx-background-color: #F8C8DC");
+         Scene employeeScene = new Scene(groupEmployee, GRID_WIDTH, GIRD_HEIGHT);
+        // groupEmployee.setStyle("-fx-background-color: #F8C8DC");
+         
+         // Main view
          
          HBox changeSceneFromMain = new HBox();
-         Button b1 = new Button();
-         Button b2 = new Button();
-         changeSceneFromMain.getChildren().add(b1);
-         changeSceneFromMain.getChildren().add(b2);
-         b2.setText("Customer View");
-         b1.setText("Employee View");
-         b1.setOnAction(e -> primaryStage.setScene(employeeScene));
-         b2.setOnAction(e -> primaryStage.setScene(customerScene));
+         changeSceneFromMain.setAlignment(Pos.CENTER);
+         Button changeToCustomerView = new Button();
+         Button changeToEmployeeView = new Button();
+         changeSceneFromMain.getChildren().add(changeToCustomerView);
+         changeSceneFromMain.getChildren().add(changeToEmployeeView);
+         changeToCustomerView.setText("Customer View");
+         changeToEmployeeView.setText("Employee View");
+         changeToEmployeeView.setOnAction(e -> primaryStage.setScene(employeeScene));
+         changeToCustomerView.setOnAction(e -> primaryStage.setScene(customerScene));
          root.add(changeSceneFromMain, 0, 0);
          
+         // Main view end
         
          
-        
+         // Employee view
+         
+         	// Models
+         
          BackDoorModel backDoorModel = new BackDoorModel(mlf);
          BackDoorViewFX backDoorView = new BackDoorViewFX(mlf);
          BackDoorController backDoorController = new BackDoorController(backDoorModel, backDoorView);
@@ -83,7 +94,7 @@ public class App extends Application {
          VBox backDoorContent = new VBox();
          backDoorContent.getChildren().add(createExistingContent());
          backDoorContent.getChildren().add(backDoorView.getRoot());
-         groupEmployee.add(backDoorView.getRoot(),0,1);
+         groupEmployee.add(backDoorView.getRoot(),2,1);
          
          CashierModel cashierModel = new CashierModel(mlf);
          CashierViewFX cashierView = new CashierViewFX(mlf);
@@ -95,7 +106,29 @@ public class App extends Application {
          cashierContent.getChildren().add(cashierView.getRoot());
          cashierContent.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
          groupEmployee.add(cashierView.getRoot(), 1, 1);
+         	
+         	// Models end
          
+         	// Buttons start
+         
+         HBox changeSceneFromEmployee= new HBox();
+         changeSceneFromEmployee.setAlignment(Pos.CENTER);
+         Button changeToCustomerView2 = new Button();
+         Button changeToMainView = new Button();
+         changeSceneFromEmployee.getChildren().add(changeToCustomerView2);
+         changeSceneFromEmployee.getChildren().add(changeToMainView);
+         changeToCustomerView2.setText("Customer View");
+         changeToMainView.setText("Main View");
+         changeToMainView.setOnAction(e -> primaryStage.setScene(mainScene));
+         changeToCustomerView2.setOnAction(e -> primaryStage.setScene(customerScene));
+         groupEmployee.add(changeSceneFromEmployee, 0, 0);
+         
+         	// Buttons start
+         
+         // Employee view end
+         
+         // Customer view
+         	// Populating and model
          CustomerModel customerModel = new CustomerModel(mlf);
          CustomerViewFX customerView = new CustomerViewFX(mlf);
          CustomerController customerController = new CustomerController(customerModel, customerView);
@@ -104,10 +137,30 @@ public class App extends Application {
          VBox customerContent = new VBox();
          customerContent.getChildren().add(createExistingContent());
          customerContent.getChildren().add(customerView.getRoot());
-         customerContent.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
          groupCustomer.add(customerView.getRoot(), 0, 2);
          
-     
+         	// Styling HBOX
+         HBox changeSceneFromCustomer= new HBox();
+         changeSceneFromCustomer.setAlignment(Pos.CENTER);
+         changeSceneFromCustomer.getStyleClass().add("navigation-button");
+         customerScene.getStylesheets().add(App.class.getResource("/clients/style.css").toExternalForm());
+         changeSceneFromCustomer.setAlignment(Pos.CENTER);
+         Button changeToEmployeeView2 = new Button();
+         Button changeToMainView2 = new Button();
+         changeSceneFromCustomer.setSpacing(10);
+         changeSceneFromCustomer.getChildren().add(changeToEmployeeView2);
+         changeSceneFromCustomer.getChildren().add(changeToMainView2);
+         changeToEmployeeView2.setText("Employee View");
+         changeToMainView2.setText("Main View");
+         
+         
+         	// Scene changer
+         changeToMainView2.setOnAction(e -> primaryStage.setScene(mainScene));
+         changeToEmployeeView2.setOnAction(e -> primaryStage.setScene(employeeScene));
+         groupCustomer.add(changeSceneFromCustomer, 3,0);
+         
+         // Customer view end
+         	//https://stackoverflow.com/questions/16977100/how-do-i-add-margin-to-a-javafx-element-using-css
 
          primaryStage.setScene(mainScene);
          primaryStage.show();

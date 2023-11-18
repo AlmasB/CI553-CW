@@ -1,10 +1,24 @@
 .button {
-    -fx-background-color: #FFC0CB;
+    -fx-background-color: #77DD77;
     -fx-text-fill: white;
-    -fx-padding: 10px 20px;
-    -fx-font-size: 14px;
+    -fx-padding: 12px;
+    -fx-border-insets: 12px;
+    -fx-font-size: 12px;
+    -fx-alignment: center;
 }
 
 .label{
     -fx-font-size:20
 } 
+
+.navigation-button{
+	-fx-padding: 5px;
+    -fx-border-insets: 5px;
+	-fx-background-insets: 5px;
+}
+
+.label{
+	-fx-font-size: 13.5px;
+}
+
+
