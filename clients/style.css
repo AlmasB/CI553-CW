@@ -1,9 +1,7 @@
 .button {
     -fx-background-color: #77DD77;
     -fx-text-fill: white;
-    -fx-padding: 12px;
-    -fx-border-insets: 12px;
-    -fx-font-size: 12px;
+    
     -fx-alignment: center;
 }
 
@@ -19,6 +17,10 @@
 
 .label{
 	-fx-font-size: 13.5px;
+}
+
+.current-button{
+	-fx-background-color: #F8C8DC;
 }
 
 

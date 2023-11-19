@@ -10,6 +10,7 @@ public class PickController
 {
   private PickModel model = null;
   private PickView  view  = null;
+  private PickViewFX viewFX = null;
   /**
    * Constructor
    * @param model The model 
@@ -18,6 +19,12 @@ public class PickController
   public PickController( PickModel model, PickView view )
   {
     this.view  = view;
+    this.model = model;
+  }
+  
+  public PickController( PickModel model, PickViewFX viewFX )
+  {
+    this.viewFX  = viewFX;
     this.model = model;
   }
 

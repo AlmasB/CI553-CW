@@ -9,6 +9,7 @@ public class CollectController
 {
   private CollectModel model = null;
   private CollectView  view  = null;
+  private CollectViewFX viewFX = null;
 
   /**
    * Constructor
@@ -18,6 +19,12 @@ public class CollectController
   public CollectController( CollectModel model, CollectView view )
   {
     this.view  = view;
+    this.model = model;
+  }
+  
+  public CollectController( CollectModel model, CollectViewFX viewFX )
+  {
+    this.viewFX  = viewFX;
     this.model = model;
   }
 

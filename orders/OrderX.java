@@ -34,7 +34,7 @@ import java.util.Formatter;
  
 public class OrderX implements OrderProcessing
 {
-  private static int theNextNumber = 1;          // Start at 1
+  private static int theNextNumber = 5;          // Start at 1
   // Orders entered but waiting to be processed (picked)
   private ArrayList<Basket>  theWaitingTray = new ArrayList<Basket>();
 
@@ -70,7 +70,7 @@ public class OrderX implements OrderProcessing
    */
   public synchronized int uniqueNumber()
   {
-    return theNextNumber++;
+    return (int) ((Math.random() * (1_000_000 - 100_000)) + 100_000);
   }
 
   /**
@@ -181,14 +181,17 @@ public class OrderX implements OrderProcessing
     return res;
   }
   
+  
   private List< Integer > orderNos( ArrayList<Basket> queue )
   {
     List <Integer> res = new ArrayList<Integer>();
     for ( Basket sb: queue )
     {
-      res.add( sb.getOrderNum() );
+      res.add( sb.getOrderNum());
     }
     return res;
   }
+  
+
 
 }

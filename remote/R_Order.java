@@ -3,6 +3,7 @@ package remote;
 import catalogue.Basket;
 import middle.OrderException;
 import orders.Order;
+import orders.OrderX;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -21,12 +22,12 @@ public class      R_Order
        implements RemoteOrder_I
 {
   private static final long serialVersionUID = 1;
-  private Order aOrder = null;
+  private OrderX aOrder = null;
 
   public R_Order( String url )
          throws RemoteException, OrderException
   {
-    aOrder = new Order();
+    aOrder = new OrderX();
   }
 
   public void newOrder( Basket bought )

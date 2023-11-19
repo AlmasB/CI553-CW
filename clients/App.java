@@ -14,6 +14,7 @@ import clients.warehousePick.PickController;
 import clients.warehousePick.PickModel;
 import clients.warehousePick.PickViewFX;
 import clients.collection.*;
+import clients.shopDisplay.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -176,8 +177,17 @@ public class App extends Application {
 		collectContent.getChildren().add(createExistingContent());
 		collectContent.getChildren().add(collectView.getRoot());
 		
+		DisplayModel displayModel = new DisplayModel(mlf);
+		DisplayViewCustomerFX displayCustomerView = new DisplayViewCustomerFX(mlf);
+		DisplayController displayController = new DisplayController(displayModel, displayCustomerView);
+		displayCustomerView.setController(displayController);
+		displayModel.addObserver(displayCustomerView);
+		VBox displayContent = new VBox();
+		displayContent.getChildren().add(createExistingContent());
+		displayContent.getChildren().add(displayCustomerView.getRoot());
+		
 		HBox firstRowCustomer = new HBox();
-		firstRowCustomer.getChildren().addAll(customerContent,collectContent);
+		firstRowCustomer.getChildren().addAll(customerContent,collectContent,displayContent);
 		
 		
 		groupCustomer.add(firstRowCustomer, 1, 2);

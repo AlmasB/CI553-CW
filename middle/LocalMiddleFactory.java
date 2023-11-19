@@ -8,6 +8,7 @@ package middle;
 import dbAccess.StockR;
 import dbAccess.StockRW;
 import orders.Order;
+import orders.OrderX;
 
 
 /**
@@ -21,7 +22,7 @@ public class LocalMiddleFactory implements MiddleFactory
 {
   private static StockR  aStockR  = null;
   private static StockRW aStockRW = null;
-  private static Order   aOrder   = null;
+  private static OrderX   aOrder   = null;
   
   /**
    * Return an object to access the database for read only access.
@@ -55,7 +56,7 @@ public class LocalMiddleFactory implements MiddleFactory
   public OrderProcessing makeOrderProcessing() throws OrderException
   {
     if ( aOrder == null )
-      aOrder = new Order();
+      aOrder = new OrderX();
     return aOrder;
   }
 }

@@ -9,6 +9,7 @@ public class DisplayController
 {
   private DisplayModel model = null;
   private DisplayView  view  = null;
+  private DisplayViewCustomerFX viewFX = null;
   /**
    * Constructor
    * @param model The model 
@@ -17,6 +18,12 @@ public class DisplayController
   public DisplayController( DisplayModel model, DisplayView view )
   {
     this.view  = view;
+    this.model = model;
+  }
+  
+  public DisplayController( DisplayModel model, DisplayViewCustomerFX viewFX )
+  {
+    this.viewFX  = viewFX;
     this.model = model;
   }
 }

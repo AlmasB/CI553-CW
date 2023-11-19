@@ -38,8 +38,8 @@ public class CustomerModel extends Observable
       theStock = mf.makeStockReader();           // Database access
     } catch ( Exception e )
     {
-      DEBUG.error("CustomerModel.constructor\n" +
-                  "Database not created?\n%s\n", e.getMessage() );
+      DEBUG.error("CustomerModel.constructor \n" +
+                  "Database  not created?\n%s\n", e.getMessage() );
     }
     theBasket = makeBasket();                    // Initial Basket
   }
