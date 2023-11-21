@@ -52,17 +52,11 @@ class Main
     MiddleFactory mlf = new LocalMiddleFactory(); // Direct access
  
     startCustomerGUI_MVC(mlf);
-    if ( many ) 
-     startCustomerGUI_MVC(mlf);
-    startCashierGUI_MVC(mlf);
     startCashierGUI_MVC(mlf);
     startBackDoorGUI_MVC(mlf);
-    if ( many ) 
-      startPickGUI_MVC(mlf);
+    startAdminGUI_MVC(mlf);
     startPickGUI_MVC(mlf);
     startDisplayGUI_MVC(mlf);
-    if ( many ) 
-      startDisplayGUI_MVC(mlf);
     startCollectionGUI_MVC(mlf);
   }
   
@@ -116,9 +110,16 @@ class Main
     BackDoorController cont  = new BackDoorController( model, view );
     view.setController( cont );
     model.addObserver( view );       // Add observer to the model
-    window.setVisible(true);         // Make window visible
-    
-    new AdminView(window, mlf, 0, 0);
+    window.setVisible(true);         // Make window visible    
+  }
+  
+  public void startAdminGUI_MVC(MiddleFactory f) {
+	  JFrame window = new JFrame();
+	  window.setTitle("Admin Client MVC");
+	  window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	  Dimension pos = PosOnScrn.getPos();
+	  
+	  AdminView view = new AdminView(window, f, pos.width, pos.height);
   }
   
 

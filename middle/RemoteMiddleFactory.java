@@ -4,6 +4,8 @@
  */
 package middle;
 
+import middle.admin.EmployeeManager;
+
 /**
   * Provide access to middle tier components.
   */
@@ -55,6 +57,10 @@ public class RemoteMiddleFactory implements MiddleFactory
   public OrderProcessing makeOrderProcessing() throws OrderException
   {
     return new F_Order( theOrder_URL );
+  }
+  
+  public EmployeeManager makeEmployeeManager() {
+	  return null; // TODO: Remote employee manager
   }
 }
 

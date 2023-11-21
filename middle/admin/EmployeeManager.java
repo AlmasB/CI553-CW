@@ -1,5 +1,7 @@
 package middle.admin;
 
+import java.sql.SQLException;
+
 import admin.Employee;
 
 public interface EmployeeManager {
@@ -19,14 +21,17 @@ public interface EmployeeManager {
 	 * @param name The name, can be null
 	 * @param passCode The pass-code. If null, will default to '0000'.
 	 * @return The employee object after inserting into the table
+	 * @throws SQLException 
 	 */
-	Employee createNewEmployee(String name, String passCode);
+	Employee createNewEmployee(String name, String passCode) throws SQLException;
 	
 	/**
 	 * Deletes the employee
 	 * @param employeeId The id to delete
+	 * @return {@code true} if the employee was deleted
+	 * @throws SQLException 
 	 */
-	void deleteEmployee(long employeeId);
+	boolean deleteEmployee(long employeeId) throws SQLException;
 	
 	/**
 	 * Checks whether the passcode is valid (only contains digits 0-9)

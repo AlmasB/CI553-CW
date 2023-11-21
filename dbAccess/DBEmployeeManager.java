@@ -38,15 +38,32 @@ public class DBEmployeeManager implements EmployeeManager {
 	}
 	
 	@Override
-	public Employee createNewEmployee(String name, String passCode) {
-		// TODO Auto-generated method stub
+	public Employee createNewEmployee(String name, String passCode) throws SQLException {
+		PreparedStatement statement = getPreparedStatement(
+				"INSERT INTO EmployeeTable(name, passCode) VALUES(?, ?)"
+				);
+		statement.setString(1, name);
+		statement.setString(2, passCode);
+		statement.execute();
+		
+		// Get the generated auto-incrementing primary key
+		// Which will be the ID of the employee
+		ResultSet result = statement.getGeneratedKeys();
+		if(result.next()) {
+			// the auto generated primary-key will be the only column in this result set
+			int id = result.getInt(1);
+			return new Employee(id, name, passCode);
+		}
 		return null;
 	}
 	
 	@Override
-	public void deleteEmployee(long employeeId) {
-		// TODO Auto-generated method stub
-		
+	public boolean deleteEmployee(long employeeId) throws SQLException {
+		PreparedStatement statement = getPreparedStatement(
+				"DELETE FROM EmployeeTable WHERE id=?"
+				);
+		statement.setLong(1, employeeId);
+		return statement.execute();
 	}
 	
 	protected final PreparedStatement getPreparedStatement(String sql) throws SQLException {

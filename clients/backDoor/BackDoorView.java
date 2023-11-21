@@ -93,6 +93,7 @@ public class BackDoorView implements Observer
     theOutput.setFont( f );                         //  Uses font  
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
+    
     rootWindow.setVisible( true );                  // Make visible
     theInput.requestFocus();                        // Focus is here
   }
