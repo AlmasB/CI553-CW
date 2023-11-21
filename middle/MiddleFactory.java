@@ -6,6 +6,8 @@
 
 package middle;
 
+import middle.admin.EmployeeManager;
+
 /**
   * Provide access to middle tier components.
   */
@@ -36,6 +38,13 @@ public interface MiddleFactory
    * @throws OrderException if issue
    */
   public OrderProcessing makeOrderProcessing() throws OrderException;
+  
+  /**
+   * Return an object to access the employee management system
+   * @return instance of EmployeeManager
+ * @throws Exception 
+   */
+  public EmployeeManager makeEmployeeManager() throws Exception;
 
 }
 

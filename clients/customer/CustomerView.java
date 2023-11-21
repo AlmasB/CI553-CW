@@ -227,6 +227,7 @@ public class CustomerView implements Observer
   private void updateBasket(Basket basket, int selectedIndex) {
 	  basketDisplay.setText(basket.getDetails());
 	  if(basket.isEmpty()) return;
+	  if(selectedIndex < 0 || selectedIndex >= basket.size()) return;
 	  
 	  Pair<Integer, Integer> indexes = basket.getBasketDetails()
 			  .getProductIndexes(basket.get(selectedIndex));

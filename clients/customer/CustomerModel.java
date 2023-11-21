@@ -13,6 +13,9 @@ import middle.StockReader;
 import util.Pair;
 
 import javax.swing.*;
+
+import java.beans.PropertyChangeSupport;
+import java.util.List;
 import java.util.Observable;
 
 /**
@@ -30,7 +33,7 @@ public class CustomerModel extends Observable
   private String      pn = "";                    // Product being processed
   private Listener<Boolean> validProductCodeListener;
 
-  private final StockReadWriter stockReader;
+  private final StockReadWriter stockReadWriter;
   private final OrderProcessing orderProcessing;
   private ImageIcon       thePic       = null;
 
@@ -38,11 +41,10 @@ public class CustomerModel extends Observable
    * Construct the model of the Customer
    * @param mf The factory to create the connection objects
    */
-  public CustomerModel(MiddleFactory mf)
-  {
+  public CustomerModel(MiddleFactory mf) {
     try                                          // 
     {  
-      //stockReader = mf.makeStockReader();           // Database access
+      stockReadWriter = mf.makeStockReadWriter();           // Database access
       orderProcessing = mf.makeOrderProcessing();
     } catch ( Exception e )
     {
@@ -76,7 +78,7 @@ public class CustomerModel extends Observable
   
   public void processCheck(String productNumber) {
 	  try {
-		  if(!stockReader.exists(productNumber)) {
+		  if(!stockReadWriter.exists(productNumber)) {
 			  validProductCodeListener.onChange(false);
 			  return;
 		  }
@@ -98,10 +100,10 @@ public class CustomerModel extends Observable
     int    amount  = 1;                         //  & quantity
     try
     {
-      if ( stockReader.exists( pn ) )              // Stock Exists?
+      if ( stockReadWriter.exists( pn ) )              // Stock Exists?
       {                                         // T
         validProductCodeListener.onChange(true);
-    	  product = stockReader.getDetails( pn ); //  Product
+    	  product = stockReadWriter.getDetails( pn ); //  Product
         if (product.getQuantity() >= amount )       //  In stock?
         { 
           theAction =                           //   Display 
@@ -110,7 +112,7 @@ public class CustomerModel extends Observable
             		product.getPrice(),                    //    price
             		product.getQuantity() );               //    quantity
           product.setQuantity( amount );             //   Require 1
-          thePic = stockReader.getImage( pn );     //    product
+          thePic = stockReadWriter.getImage( pn );     //    product
         } else {                                //  F
           theAction =                           //   Inform
         		  product.getDescription() +               //    product not
@@ -149,7 +151,7 @@ public class CustomerModel extends Observable
 		  // Product must not be null, inform the user they have not queried an item
 		  action = "Nothing to add to basket!";
 	  } else {
-		  if(stockReader.getProductStockLevel(product.getProductNum()) > 0) {
+		  if(stockReadWriter.getProductStockLevel(product.getProductNum()) > 0) {
 			  basket.add(product);
 			  action = product.getDescription() + " added to basket!";
 		  } else {
@@ -202,25 +204,33 @@ public class CustomerModel extends Observable
 	  
 	  try {
 		  // Try buy the stock first
-		  stockReader
+		  List<Product> unbought = stockReadWriter.buyAllStock(basket);
+		  basket.removeAll(unbought); // Remove the items that could not be bought from the basket
 		  
 		  int orderNumber = orderProcessing.uniqueNumber();
 		  basket.setOrderNum(orderNumber);
 		  DEBUG.trace("Basket: " + basket.getDetails());
 		  orderProcessing.newOrder(basket);
 		  result = "Order purchased, order no: #" + orderNumber;
-	  } catch(OrderException e) {
+		  
+		  // Must make a new basket here as some code may rely on this basket object.
+		  basket = makeBasket();
+		  if(!unbought.isEmpty()) {
+			  // Inform the user that X items could not be purchased
+			  result += unbought.size() + " item" + 
+					  (unbought.size() == 1 ? " was" : "s were") + " out of stock";
+			  // Add these unbought items back to the basket
+			  basket.addAll(unbought);
+		  }
+		  basketChangeListener.onChange(new Pair<>(basket, (selectedBasketIndex = -1)));
+		  setChanged();
+		  notifyObservers(result);
+	  } catch(OrderException | StockException e) {
 		  DEBUG.error("%s\n%s", "CashierModel.doCancel", e.getMessage());
 		  setChanged(); 
 		  notifyObservers(e.getMessage()); // Notify
 		  return;
 	  }
-	  
-	  // Must make a new basket here as some code may rely on this basket object.
-	  basket = makeBasket();
-	  basketChangeListener.onChange(new Pair<>(basket, (selectedBasketIndex = -1)));
-	  setChanged();
-	  notifyObservers(result);
   }
   
   public void decreaseSelectedBasketIndex() {

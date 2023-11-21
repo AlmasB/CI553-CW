@@ -5,8 +5,10 @@
 
 package middle;
 
+import dbAccess.DBEmployeeManager;
 import dbAccess.StockR;
 import dbAccess.StockRW;
+import middle.admin.EmployeeManager;
 import orders.Order;
 
 
@@ -22,6 +24,7 @@ public class LocalMiddleFactory implements MiddleFactory
   private static StockR  aStockR  = null;
   private static StockRW aStockRW = null;
   private static Order   aOrder   = null;
+  private EmployeeManager employeeManager = null;
   
   /**
    * Return an object to access the database for read only access.
@@ -58,5 +61,13 @@ public class LocalMiddleFactory implements MiddleFactory
       aOrder = new Order();
     return aOrder;
   }
+  
+  @Override
+	public EmployeeManager makeEmployeeManager() throws Exception {
+		if(employeeManager == null)
+			employeeManager = new DBEmployeeManager();
+		
+		return employeeManager;
+	}
 }
 

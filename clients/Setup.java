@@ -60,7 +60,17 @@ class Setup
   "insert into StockTable values ( '0007',  01 )",
 
   "select * from StockTable, ProductTable " +
-          " where StockTable.productNo = ProductTable.productNo"
+          " where StockTable.productNo = ProductTable.productNo",
+		  
+          // Employees
+          "drop table EmployeeTable",
+          "create table EmployeeTable ("
+          + "id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),"
+          + "name VARCHAR(200),"
+          + "passCode VARCHAR(16) NOT NULL"
+          + ")",
+          "insert into EmployeeTable(name, passCode) "
+          + "values ('Admin', '1234')" // default employee for testing
 
  };
 

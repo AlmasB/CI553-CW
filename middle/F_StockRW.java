@@ -15,6 +15,7 @@ import remote.RemoteStockRW_I;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * Setup connection to the middle tier
@@ -69,6 +70,12 @@ public class F_StockRW extends F_StockR
       throw new StockException( "Net: " + e.getMessage() );
     }
   }
+  
+  @Override
+	public List<Product> buyAllStock(List<Product> list) throws StockException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
   /**
    * Adds (Restocks) stock to the product list

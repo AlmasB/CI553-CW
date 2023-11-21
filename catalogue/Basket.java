@@ -87,6 +87,15 @@ public class Basket extends ArrayList<Product> implements Serializable
   }
   
   @Override
+	public boolean addAll(Collection<? extends Product> c) {
+		boolean changedFlag = false;
+		for(Product p : c) {
+			changedFlag = add(p) ? true : changedFlag;
+		}
+		return changedFlag;
+	}
+  
+  @Override
 	public boolean remove(Object o) {
 	  if(!(o instanceof Product)) return false;
 	  

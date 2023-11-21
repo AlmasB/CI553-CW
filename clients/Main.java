@@ -1,4 +1,5 @@
 package clients;
+import clients.admin.AdminView;
 import clients.backDoor.BackDoorController;
 import clients.backDoor.BackDoorModel;
 import clients.backDoor.BackDoorView;
@@ -114,9 +115,10 @@ class Main
     BackDoorView view        = new BackDoorView( window, mlf, pos.width, pos.height );
     BackDoorController cont  = new BackDoorController( model, view );
     view.setController( cont );
-
     model.addObserver( view );       // Add observer to the model
     window.setVisible(true);         // Make window visible
+    
+    new AdminView(window, mlf, 0, 0);
   }
   
 

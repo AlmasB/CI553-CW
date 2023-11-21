@@ -88,6 +88,12 @@ public class F_StockR implements StockReader
     }
   }
   
+  @Override
+	public int getProductStockLevel(String productNumber) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+  
   
   public synchronized ImageIcon getImage( String number )
          throws StockException

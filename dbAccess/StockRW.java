@@ -66,6 +66,8 @@ public class StockRW extends StockR implements StockReadWriter
   
   	@Override
 	public List<Product> buyAllStock(List<Product> list) throws StockException {
+  		DEBUG.trace("Database StockRW: buyAllStock(%s)", list);
+  		
   		List<Product> resultingList = new ArrayList<>();
 		try {
 			PreparedStatement statement = getPreparedStatement(
