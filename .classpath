@@ -12,5 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/Users/User/Documents/CalGit/CI553-2023-Catshop/lib/db-derby-10.14.2.0-lib/lib/derby.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
