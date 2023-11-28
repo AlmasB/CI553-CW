@@ -13,6 +13,7 @@ import javax.swing.*;
 public interface StockReader
 {
 
+
  /**
    * Checks if the product exits in the stock list
    * @param pNum Product nymber

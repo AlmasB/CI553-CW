@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @version 3.0 Derby
  */
 
-class Setup 
+public class Setup
 {
   private static String[] sqlStatements = {
 
@@ -157,7 +157,7 @@ class Setup
   }
 
 
-  private static void query( Statement stmt, String url, String stm )
+  public static void query(Statement stmt, String url, String stm)
   {
     try
     {

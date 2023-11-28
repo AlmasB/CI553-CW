@@ -65,6 +65,11 @@ public class Basket extends ArrayList<Product> implements Serializable
    * Returns a description of the products in the basket suitable for printing.
    * @return a string description of the basket products
    */
+
+  public boolean remove( Product pr ) {
+    return super.remove(pr); // Call remove in ArrayList
+  }
+
   public String getDetails()
   {
     Locale uk = Locale.UK;

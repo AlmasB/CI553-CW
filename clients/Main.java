@@ -12,6 +12,7 @@ import clients.customer.CustomerClient;
 import clients.customer.CustomerController;
 import clients.customer.CustomerModel;
 import clients.customer.CustomerView;
+import clients.login.Login;
 import clients.shopDisplay.DisplayController;
 import clients.shopDisplay.DisplayModel;
 import clients.shopDisplay.DisplayView;
@@ -33,7 +34,7 @@ import java.awt.event.ActionListener;
  * @author  Mike Smith University of Brighton
  * @version 2.0
  */
-class Main
+public class Main
 {
   // Change to false to reduce the number of duplicated clients
 

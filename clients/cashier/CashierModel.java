@@ -56,6 +56,7 @@ public class CashierModel extends Observable
    * Check if the product is in Stock
    * @param productNum The product number
    */
+
   public void doCheck(String productNum )
   {
     String theAction = "";
@@ -97,6 +98,12 @@ public class CashierModel extends Observable
   /**
    * Buy the product
    */
+
+  public void doRemove(){
+    String theAction = "";
+    int amount = 1;
+
+  }
   public void doBuy()
   {
     String theAction = "";
@@ -160,7 +167,7 @@ public class CashierModel extends Observable
   }
 
   /**
-   * ask for update of view callled at start of day
+   * ask for update of view called at start of day
    * or after system reset
    */
   public void askForUpdate()
