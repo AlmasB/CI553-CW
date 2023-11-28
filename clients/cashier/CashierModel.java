@@ -1,6 +1,7 @@
 package clients.cashier;
 
 import catalogue.Basket;
+
 import catalogue.Product;
 import debug.DEBUG;
 import middle.*;
@@ -14,16 +15,16 @@ import java.util.Observable;
  */
 public class CashierModel extends Observable
 {
-  private enum State { process, checked }
+  protected enum State { process, checked }
 
-  private State       theState   = State.process;   // Current state
-  private Product     theProduct = null;            // Current product
-  private Basket      theBasket  = null;            // Bought items
+  protected State       theState   = State.process;   // Current state
+  protected Product     theProduct = null;            // Current product
+  protected Basket      theBasket  = null;            // Bought items
 
-  private String      pn = "";                      // Product being processed
+  protected String      pn = "";                      // Product being processed
 
-  private StockReadWriter theStock     = null;
-  private OrderProcessing theOrder     = null;
+  protected StockReadWriter theStock     = null;
+  protected OrderProcessing theOrder     = null;
 
   /**
    * Construct the model of the Cashier
@@ -160,7 +161,7 @@ public class CashierModel extends Observable
   }
 
   /**
-   * ask for update of view callled at start of day
+   * ask for update of view called at start of day
    * or after system reset
    */
   public void askForUpdate()
@@ -171,7 +172,7 @@ public class CashierModel extends Observable
   /**
    * make a Basket when required
    */
-  private void makeBasketIfReq()
+  protected void makeBasketIfReq()
   {
     if ( theBasket == null )
     {
@@ -196,5 +197,7 @@ public class CashierModel extends Observable
   {
     return new Basket();
   }
+
 }
+
   

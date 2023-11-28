@@ -2,8 +2,8 @@ package clients;
 import clients.backDoor.BackDoorController;
 import clients.backDoor.BackDoorModel;
 import clients.backDoor.BackDoorView;
+import clients.cashier.BetterCashierModel;
 import clients.cashier.CashierController;
-import clients.cashier.CashierModel;
 import clients.cashier.CashierView;
 import clients.collection.CollectController;
 import clients.collection.CollectModel;
@@ -27,7 +27,7 @@ import java.awt.*;
 /**
  * Starts all the clients  as a single application.
  * Good for testing the system using a single application but no use of RMI.
- * @author  Mike Smith University of Brighton
+ * @author  Zayan Rehman University of Brighton
  * @version 2.0
  */
 class Main
@@ -36,7 +36,7 @@ class Main
 
   private final static boolean many = false;        // Many clients? (Or minimal clients)
 
-  public static void main (String args[])
+  public static void main (String args[])       
   {
     new Main().begin();
   }
@@ -80,26 +80,27 @@ class Main
     window.setVisible(true);         // start Screen
   }
 
-  /**
-   * start the cashier client
-   * @param mlf A factory to create objects to access the stock list
-   */
-  public void startCashierGUI_MVC(MiddleFactory mlf )
-  {
-    JFrame  window = new JFrame();
-    window.setTitle( "Cashier Client MVC");
-    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-    Dimension pos = PosOnScrn.getPos();
-    
-    CashierModel model      = new CashierModel(mlf);
-    CashierView view        = new CashierView( window, mlf, pos.width, pos.height );
-    CashierController cont  = new CashierController( model, view );
-    view.setController( cont );
+  /** 
+  *start the cashier client
+  * @param mlf A factory to create objects to access the stock list
+  */
+  
+ public void startCashierGUI_MVC(MiddleFactory mlf) {
+     JFrame window = new JFrame();
+     window.setTitle("Cashier Client MVC");
+     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     Dimension pos = PosOnScrn.getPos();
 
-    model.addObserver( view );       // Add observer to the model
-    window.setVisible(true);         // Make window visible
-    model.askForUpdate();            // Initial display
-  }
+     BetterCashierModel model = new BetterCashierModel(mlf); // Change here
+     CashierView view = new CashierView(window, mlf, pos.width, pos.height);
+     CashierController cont = new CashierController(model, view);
+     view.setController(cont);
+
+     model.addObserver(view); // Add observer to the model
+     window.setVisible(true); // Make window visible
+     model.askForUpdate(); // Initial display
+ }
+
 
   public void startBackDoorGUI_MVC(MiddleFactory mlf )
   {
