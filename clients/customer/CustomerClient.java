@@ -18,6 +18,7 @@ import javax.swing.*;
 public class CustomerClient {
   public static void main (String args[])
   {
+
     String stockURL = args.length < 1         // URL of stock R
                     ? Names.STOCK_R           //  default  location
                     : args[0];                //  supplied location
@@ -25,6 +26,8 @@ public class CustomerClient {
     RemoteMiddleFactory mrf = new RemoteMiddleFactory();
     mrf.setStockRInfo( stockURL );
     displayGUI(mrf);                          // Create GUI
+
+
   }
    
   public static void displayGUI(MiddleFactory mf)
