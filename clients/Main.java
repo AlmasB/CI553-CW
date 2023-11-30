@@ -20,6 +20,8 @@ import clients.warehousePick.PickView;
 import middle.LocalMiddleFactory;
 import middle.MiddleFactory;
 
+import clients.cashier.BetterCashierModel;    //adding BetterCashierModel
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -91,7 +93,7 @@ class Main
     window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
     Dimension pos = PosOnScrn.getPos();
     
-    CashierModel model      = new CashierModel(mlf);
+    BetterCashierModel model      = new BetterCashierModel(mlf);          //ME: BetterCashier model implemented 
     CashierView view        = new CashierView( window, mlf, pos.width, pos.height );
     CashierController cont  = new CashierController( model, view );
     view.setController( cont );

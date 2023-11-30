@@ -11,7 +11,7 @@ import java.util.Observable;
 
 // File is complete but not optimal
 //  Will force update of display every 2 seconds
-//  Could be clever & only ask for an update of the display 
+//  Could be clever & only ask for an update of the display  
 //   if it really has changed
 
 /**
@@ -23,6 +23,9 @@ import java.util.Observable;
 public class DisplayModel extends Observable
 {
   private OrderProcessing theOrder = null;
+  
+  
+        
 
   /**
    * Set up initial connection to the order processing system
@@ -63,6 +66,9 @@ public class DisplayModel extends Observable
       }
     }
   }
+  
+  
+  
   
  // Will be called by the viewOfDisplay
  //   when it is told that the view has changed

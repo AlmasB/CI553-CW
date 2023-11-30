@@ -6,16 +6,19 @@ import middle.OrderProcessing;
 
 import java.util.Observable;
 
+
+
 /**
  * Implements the Model of the collection client
  * @author  Mike Smith University of Brighton
  * @version 1.0
  */
 
-public class CollectModel extends Observable
+public class CollectModel extends Observable 
 {
   private String      theAction   = "";
   private String      theOutput   = "";
+  
   private OrderProcessing theOrder     = null;
 
   /*
@@ -83,5 +86,8 @@ public class CollectModel extends Observable
   {
     return theOutput;
   }
+  
+
+
   
 }

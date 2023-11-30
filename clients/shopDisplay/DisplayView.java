@@ -27,6 +27,9 @@ public class DisplayView extends Canvas implements Observer
   private String textToDisplay = "";
   private DisplayController cont= null;
   
+  
+ 
+  
   /**
    * Construct the view
    * @param rpc   Window in which to construct
@@ -68,7 +71,10 @@ public class DisplayView extends Canvas implements Observer
     try
     {
       Map<String, List<Integer> > res =
-      ( (DisplayModel) aModelOfDisplay ).getOrderState();
+      ( (DisplayModel) aModelOfDisplay ).getOrderState();                            
+
+	
+	
 
       textToDisplay = 
            "Orders in system" + "\n" +
@@ -77,8 +83,12 @@ public class DisplayView extends Canvas implements Observer
            "Being picked   : " + listOfOrders( res, "BeingPicked" ) + 
            "\n"  + 
            "To Be Collected: " + listOfOrders( res, "ToBeCollected" );
-    }
-    catch ( OrderException err )
+     
+     
+      
+      
+
+    } catch ( OrderException err )
     {
       textToDisplay = "\n" + "** Communication Failure **";
     }
