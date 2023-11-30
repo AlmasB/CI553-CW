@@ -7,20 +7,20 @@ import java.util.Comparator;
 /**
  * Write a description of class BetterBasket here.
  * 
- * @author  Your Name 
+ * @author  Your Name
  * @version 1.0
  */
 public class BetterBasket extends Basket implements Serializable
 {
   private static final long serialVersionUID = 1L;
- // @Override
-  public boolean addProduct(Product pr) {
+  @Override
+  public boolean add(Product p1) {                                 
 	  
-	  for(Product exsistingProduct:this){
-		  if(exsistingProduct.getProductNum().equals(pr.getProductNum())) {
+	  for(Product p2:this){                                                 //ME:
+		  if(p1.getProductNum().equals(p2.getProductNum())) {
 			  
-		
-			exsistingProduct.setQuantity(exsistingProduct.getQuantity()+ pr.getQuantity());
+		    
+			p2.setQuantity(p2.getQuantity()+ p1.getQuantity());
 		  
 		  return (true);
 	  }
@@ -29,17 +29,18 @@ public class BetterBasket extends Basket implements Serializable
 	  
   }
   
-  super.add(pr);
+  super.add(p1);
+  
   
   Collections.sort(this, new ProductComparator());
   return (true);
 }
   
-private static class ProductComparator implements Comparator<Product> {
+private static class ProductComparator implements Comparator<Product> {        //comparing product numbers to order numerically
   @Override
-public int compare(Product pr1, Product pr2) {
+public int compare(Product p1, Product p2) {
 	
-	return pr1.getProductNum().compareTo(pr2.getProductNum());
+	return p1.getProductNum().compareTo(p2.getProductNum());
 }
 }
 
