@@ -24,7 +24,7 @@ public class DisplayModel extends Observable
 {
   private OrderProcessing theOrder = null;
   
-  
+  private Map<String, List<Integer>> previousOrderState = null;  //ME:
         
 
   /**
@@ -67,7 +67,24 @@ public class DisplayModel extends Observable
     }
   }
   
+  private void updateDisplayIfChanged()                                                          //ME: *Need to test if this method actually works*
   
+  {
+	   try
+	   {
+		   Map<String, List<Integer>> currentOrderState = theOrder.getOrderState();
+		if(!currentOrderState.equals(previousOrderState)) {
+			DEBUG.trace("ModelOfDisplay call view");
+			setChanged();
+			notifyObservers();
+			previousOrderState = currentOrderState;
+		}
+	   }
+	   catch(OrderException e)
+	   { 
+		   DEBUG.error("Error updating dispay:" + e.getMessage());
+	   }
+  }
   
   
  // Will be called by the viewOfDisplay

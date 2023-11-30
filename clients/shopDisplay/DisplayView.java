@@ -28,7 +28,7 @@ public class DisplayView extends Canvas implements Observer
   private DisplayController cont= null;
   
   
- 
+  private Map<String, List <Integer>> previousOrderState=null;                 //ME
   
   /**
    * Construct the view
@@ -68,32 +68,34 @@ public class DisplayView extends Canvas implements Observer
     //  Orders being picked in the 'warehouse. 
     //  Orders awaiting collection
     
-    try
-    {
-      Map<String, List<Integer> > res =
-      ( (DisplayModel) aModelOfDisplay ).getOrderState();                            
+	  try
+	    {
+	      Map<String, List<Integer> > res =
+	      ( (DisplayModel) aModelOfDisplay ).getOrderState();                            //ME: Compare order state with prior order state stored in view, 
+	                                                                                     //    update if change has been made
+	if (!res.equals(previousOrderState)) {
+		
+		
 
-	
-	
-
-      textToDisplay = 
-           "Orders in system" + "\n" +
-           "Waiting        : " + listOfOrders( res, "Waiting" ) + 
-           "\n"  + 
-           "Being picked   : " + listOfOrders( res, "BeingPicked" ) + 
-           "\n"  + 
-           "To Be Collected: " + listOfOrders( res, "ToBeCollected" );
-     
-     
-      
-      
-
-    } catch ( OrderException err )
-    {
-      textToDisplay = "\n" + "** Communication Failure **";
-    }
-    repaint();                            // Draw graphically    
-  }
+	      textToDisplay = 
+	           "Orders in system" + "\n" +
+	           "Waiting        : " + listOfOrders( res, "Waiting" ) + 
+	           "\n"  + 
+	           "Being picked   : " + listOfOrders( res, "BeingPicked" ) + 
+	           "\n"  + 
+	           "To Be Collected: " + listOfOrders( res, "ToBeCollected" );
+	     
+	      previousOrderState = res;                                                  //ME: Stores current order state for future comparison 
+	 
+	      repaint();
+	      
+	}
+	    } catch ( OrderException err )
+	    {
+	      textToDisplay = "\n" + "** Communication Failure **";
+	    }
+	    repaint();                            // Draw graphically    
+	  }
   
   @Override
   public void update( Graphics g )        // Called by repaint
