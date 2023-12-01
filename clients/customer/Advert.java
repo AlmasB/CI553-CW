@@ -1,4 +1,7 @@
 package clients.customer;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -18,6 +21,8 @@ public class Advert extends JFrame {
     }
 
     public Advert(){
+        String filepath = "music/modernmusic.mp3";
+        backgroundMusic(filepath);
 
         //array list for images
         imagePath = new ArrayList<>();
@@ -63,13 +68,17 @@ public class Advert extends JFrame {
     // add to PANEL
         JLabel text = new JLabel("SALE!");
         add(text); // sale text
-
-        text.setBounds(225, 300, 100, 50); // buttons
+        text.setFont(new Font("Ariel", Font.BOLD, 25));
+        nextImage(); // add image to screen
+        text.setBounds(200, 300, 100, 50); // buttons
         JPanel buttons = new JPanel();
         buttons.add(previousButton);
         buttons.add(nextButton);
         add(buttons);
-        buttons.setBounds(300, 0, 100, 50);
+        buttons.setBounds(300, 0, 100, 100);
+
+
+        setResizable(false); // stops resizing of frame
     }
 
 
@@ -98,6 +107,25 @@ public class Advert extends JFrame {
     private void previousImage() {
         index = (index - 1 + imagePath.size()) % imagePath.size();
         showCurrentImage();
+    }
+
+    public static void backgroundMusic(String filePath){
+
+        try {
+            File musicFilePath = new File(filePath);
+
+            if (musicFilePath.exists()){
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicFilePath);
+                Clip clip = AudioSystem.getClip();
+                clip.start();
+            }
+            else {
+                System.out.println("Error: Cant find file");
+            }
+        } catch(Exception e ){
+            System.out.println(e);
+        }
+
     }
 
 }

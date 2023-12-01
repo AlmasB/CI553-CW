@@ -46,11 +46,12 @@ public class StockRW extends StockR implements StockReadWriter
     try
     {
       getStatementObject().executeUpdate(
-        "update StockTable set stockLevel = stockLevel-" + amount +
-        "       where productNo = '" + pNum + "' and " +
-        "             stockLevel >= " + amount + ""
+              "UPDATE StockTable SET stockLevel = stockLevel - " + amount +
+                      " WHERE productNo = '" + pNum + "' AND stockLevel >= " + amount + "; " // updates stock level
       );
-      updates = 1; // getStatementObject().getUpdateCount();
+      getStatementObject().executeUpdate("UPDATE ProductTable SET purchases = purchases + 1 WHERE productNo = '" + pNum + "';"); // updates purchases and increases by 1
+
+      updates = 2; // getStatementObject().getUpdateCount();
     } catch ( SQLException e )
     {
       throw new StockException( "SQL buyStock: " + e.getMessage() );

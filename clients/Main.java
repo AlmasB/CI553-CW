@@ -8,10 +8,7 @@ import clients.cashier.CashierView;
 import clients.collection.CollectController;
 import clients.collection.CollectModel;
 import clients.collection.CollectView;
-import clients.customer.CustomerClient;
-import clients.customer.CustomerController;
-import clients.customer.CustomerModel;
-import clients.customer.CustomerView;
+import clients.customer.*;
 import clients.login.Login;
 import clients.shopDisplay.DisplayController;
 import clients.shopDisplay.DisplayModel;
@@ -69,6 +66,8 @@ public class Main
         frame.dispose(); // close window
         CustomerClient obj = new CustomerClient(); // creates new CustomerClient object
         obj.displayGUI(mlf); // display gui
+        Advert advertWindow = new Advert(); // display advert window
+        advertWindow.setVisible(true);
       }
     });
     buttonEmployee.addActionListener(new ActionListener() {
@@ -114,6 +113,7 @@ public class Main
     window.setTitle( "Customer Client MVC");
     window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
     Dimension pos = PosOnScrn.getPos();
+
 
     CustomerModel model      = new CustomerModel(mlf);
     CustomerView view        = new CustomerView( window, mlf, pos.width, pos.height );
@@ -224,6 +224,7 @@ public class Main
     startGUIs.startPickGUI_MVC( mlf );
     startGUIs.startDisplayGUI_MVC( mlf );
     startGUIs.startCollectionGUI_MVC( mlf );
+
   }
 
 }
