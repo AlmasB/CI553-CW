@@ -8,10 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class Login{
+public class LoginClient {
     static MiddleFactory mlf = new LocalMiddleFactory();   //Direct access
 
-    public static void loginGUI() {
+    public static void main(){
 
         // username and password
         String username = "user1";
@@ -19,7 +19,6 @@ public class Login{
 
 
         JFrame frame = new JFrame("Sign In"); // create frame
-
         JButton button1 = new JButton("Sign in"); // create sign in button
         JButton button2 = new JButton("Back"); // create back button
         JLabel labelUsername = new JLabel("User Name: "); //add text

@@ -9,7 +9,7 @@ import clients.collection.CollectController;
 import clients.collection.CollectModel;
 import clients.collection.CollectView;
 import clients.customer.*;
-import clients.login.Login;
+import clients.login.LoginClient;
 import clients.shopDisplay.DisplayController;
 import clients.shopDisplay.DisplayModel;
 import clients.shopDisplay.DisplayView;
@@ -74,7 +74,7 @@ public class Main
       @Override
       public void actionPerformed(ActionEvent e) {
         frame.dispose();  //close window
-        Login.loginGUI(); //start login program for employee
+        LoginClient.main();//start login program for employee
       }
     });
 
