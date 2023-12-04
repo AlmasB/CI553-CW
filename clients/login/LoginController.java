@@ -1,5 +1,7 @@
 package clients.login;
 
+import clients.Main;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,12 +31,11 @@ public class LoginController {
         view.getBackButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle the "Back" button click, e.g., navigate back to the startup screen
+                Main main = new Main();
+                main.startup();
+
             }
         });
     }
 
-    public void showLoginView() {
-        view.show();
-    }
 }

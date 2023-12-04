@@ -38,6 +38,10 @@ public class CustomerController
     model.doClear();
   }
 
+  public void goBack() {model.goBack();}
+
   
 }
+
+
 

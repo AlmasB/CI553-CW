@@ -1,10 +1,12 @@
 package clients.login;
 
-public class LoginModel {
-    private String username;
-    private String password;
+import java.util.Observable;
 
-    public LoginModel(String username, String password) {
+public class LoginModel extends Observable {
+    private String username = "user1";
+    private String password = "password1";
+
+    public LoginModel() {
         this.username = username;
         this.password = password;
     }
@@ -12,4 +14,5 @@ public class LoginModel {
     public boolean validateCredentials(String enteredUsername, String enteredPassword) {
         return username.equals(enteredUsername) && password.equals(enteredPassword);
     }
+
 }

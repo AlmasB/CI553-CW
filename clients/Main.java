@@ -66,8 +66,6 @@ public class Main
         frame.dispose(); // close window
         CustomerClient obj = new CustomerClient(); // creates new CustomerClient object
         obj.displayGUI(mlf); // display gui
-        Advert advertWindow = new Advert(); // display advert window
-        advertWindow.setVisible(true);
       }
     });
     buttonEmployee.addActionListener(new ActionListener() {

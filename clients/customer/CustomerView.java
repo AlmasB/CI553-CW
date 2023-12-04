@@ -27,7 +27,7 @@ public class CustomerView implements Observer
   }
 
   private static final int H = 500;       // Height of window pixels
-  private static final int W = 700;       // Width  of window pixels
+  private static final int W = 825;       // Width  of window pixels
 
 
   private final JLabel      theAction  = new JLabel();
@@ -37,6 +37,7 @@ public class CustomerView implements Observer
   private final JScrollPane theSP      = new JScrollPane();
   private final JButton     theBtCheck = new JButton( Name.CHECK );
   private final JButton     theBtClear = new JButton( Name.CLEAR );
+  public final JButton backButton = new JButton("Back");
 
   private Picture thePicture = new Picture(80,80);
   private StockReader theStock   = null;
@@ -99,7 +100,11 @@ public class CustomerView implements Observer
     thePicture.setBounds( 16, 25+60*2, 110, 110 );   // Picture area
     cp.add( thePicture );                           //  Add to canvas
     thePicture.clear();
-    
+
+    backButton.setBounds(700, 400, 100, 50); // set button bounds
+    cp.add(backButton);
+    backButton.addActionListener(  e -> cont.goBack());
+
     rootWindow.setVisible( true );                  // Make visible);
     theInput.requestFocus();                        // Focus is here
   }

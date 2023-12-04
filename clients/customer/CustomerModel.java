@@ -2,6 +2,7 @@ package clients.customer;
 
 import catalogue.Basket;
 import catalogue.Product;
+import clients.Main;
 import dbAccess.KeywordSearch;
 import debug.DEBUG;
 import middle.MiddleFactory;
@@ -109,7 +110,13 @@ public class CustomerModel extends Observable
     thePic = null;                            // No picture
     setChanged(); notifyObservers(theAction);
   }
-  
+
+  public void goBack(){
+    Main main = new Main();
+    main.startup();
+
+  }
+
   /**
    * Return a picture of the product
    * @return An instance of an ImageIcon
