@@ -53,6 +53,7 @@ public class CustomerClient {
       public void actionPerformed(ActionEvent e) {
         window.dispose();
         advertWindow.dispose();
+        advertWindow.backgroundMusic.pausePlayer();
       }
     });
   }

@@ -2,6 +2,7 @@ package clients.customer;
 
 import catalogue.Basket;
 import catalogue.Product;
+import clients.AudioPlayer;
 import clients.Main;
 import dbAccess.KeywordSearch;
 import debug.DEBUG;
@@ -22,6 +23,8 @@ public class CustomerModel extends Observable
 {
   private Product     theProduct = null;          // Current product
   private Basket      theBasket  = null;          // Bought items
+
+  private Main main = new Main();
 
   private String      pn = "";                    // Product being processed
   private StockReader     theStock     = null;
@@ -112,8 +115,8 @@ public class CustomerModel extends Observable
   }
 
   public void goBack(){
-    Main main = new Main();
     main.startup();
+
 
   }
 

@@ -45,6 +45,7 @@ public class Main
     JLabel label = new JLabel("Select Customer or Employee");  //add text
     JButton buttonCustomer = new JButton("Customer"); //buttons
     JButton buttonEmployee = new JButton("Employee");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     //set bounds
     label.setBounds(200, 150, 300, 25);

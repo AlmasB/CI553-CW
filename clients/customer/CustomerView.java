@@ -9,6 +9,7 @@ import middle.StockReader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -104,7 +105,6 @@ public class CustomerView implements Observer
     backButton.setBounds(700, 400, 100, 50); // set button bounds
     cp.add(backButton);
     backButton.addActionListener(  e -> cont.goBack());
-
     rootWindow.setVisible( true );                  // Make visible);
     theInput.requestFocus();                        // Focus is here
   }

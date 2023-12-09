@@ -39,6 +39,8 @@ public class LoginView implements Observer {
         JButton button2 = new JButton("Back"); // create back button
         JLabel labelUsername = new JLabel("Username: "); //add text
         JLabel labelPassword = new JLabel(" Password: ");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         JTextField usernameField = new JTextField(20); // add textfield
         JPasswordField passwordField = new JPasswordField(20); // add passwordfield (to conceal sensitive data)

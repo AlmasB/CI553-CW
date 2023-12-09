@@ -11,19 +11,19 @@ import javax.imageio.ImageIO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-public class Advert extends JFrame {
+public class Advert extends JFrame{
     private JLabel images;
     private ArrayList<String> imagePath;
     int index;
+    AudioPlayer backgroundMusic = new AudioPlayer(); // background music
+
 
     public static void main(String[] args) {
         new Advert().setVisible(true);
     }
 
     public Advert(){
-            AudioPlayer backgroundMusic = new AudioPlayer(); // background music
-            backgroundMusic.audioPlayer();
-
+        backgroundMusic.audioPlayer();
         //array list for images
         imagePath = new ArrayList<>();
         imagePath.add("images/pic0001.jpg"); // adds image to arraylist
@@ -85,9 +85,6 @@ public class Advert extends JFrame {
         buttons.add(mute);
         add(buttons);
         buttons.setBounds(300, 0, 100, 100);
-
-
-
         setResizable(false); // stops resizing of frame
     }
 
