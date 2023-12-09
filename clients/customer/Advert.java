@@ -1,7 +1,7 @@
 package clients.customer;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import clients.AudioPlayer;
+
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -21,8 +21,8 @@ public class Advert extends JFrame {
     }
 
     public Advert(){
-        String filepath = "music/modernmusic.mp3";
-        backgroundMusic(filepath);
+            AudioPlayer backgroundMusic = new AudioPlayer(); // background music
+            backgroundMusic.audioPlayer();
 
         //array list for images
         imagePath = new ArrayList<>();
@@ -49,7 +49,7 @@ public class Advert extends JFrame {
 
         JButton nextButton = new JButton("Next");
         JButton previousButton = new JButton("Previous"); //buttons
-
+        JCheckBox mute = new JCheckBox("Mute");
 
         nextButton.addActionListener(new ActionListener() { // event listener for next buttons
             @Override
@@ -63,6 +63,14 @@ public class Advert extends JFrame {
                 previousImage();
             }
         });
+        mute.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (mute.isSelected()){
+                    backgroundMusic.pausePlayer();
+                } else {backgroundMusic.audioPlayer();}
+            }
+        });
 
 
     // add to PANEL
@@ -74,8 +82,10 @@ public class Advert extends JFrame {
         JPanel buttons = new JPanel();
         buttons.add(previousButton);
         buttons.add(nextButton);
+        buttons.add(mute);
         add(buttons);
         buttons.setBounds(300, 0, 100, 100);
+
 
 
         setResizable(false); // stops resizing of frame
@@ -109,23 +119,27 @@ public class Advert extends JFrame {
         showCurrentImage();
     }
 
-    public static void backgroundMusic(String filePath){
 
-        try {
-            File musicFilePath = new File(filePath);
 
-            if (musicFilePath.exists()){
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicFilePath);
-                Clip clip = AudioSystem.getClip();
-                clip.start();
-            }
-            else {
-                System.out.println("Error: Cant find file");
-            }
-        } catch(Exception e ){
-            System.out.println(e);
-        }
+//    public static void backgroundMusic(String filePath){
+//
+//        try {
+//            File musicFilePath = new File(filePath);
+//            if (musicFilePath.exists()){
+//                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicFilePath);
+//                Clip clip = AudioSystem.getClip();
+//                clip.start();
+//            }
+//            else {
+//                System.out.println("Error: Cant find file");
+//            }
+//        } catch(Exception e ){
+//            System.out.println(e);
+//        }
+//
+//    }
 
-    }
+
+
 
 }

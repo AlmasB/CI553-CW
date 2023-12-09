@@ -79,7 +79,6 @@ public class LoginView implements Observer {
 
             }
         });
-
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,6 +88,7 @@ public class LoginView implements Observer {
                 main.startup();
             }
         });
+
 
         //add to frame
         frame.add(labelUsername);
@@ -103,6 +103,9 @@ public class LoginView implements Observer {
         frame.setResizable(false); // stops resizing of frame
 
     }
+
+
+    // Getters
 
     public String getUsername() {
         return usernameField.getText();
@@ -129,6 +132,8 @@ public class LoginView implements Observer {
         return frame;
     }
 
+
+    //update Observable
     @Override
     public void update(Observable o, Object arg) {
 

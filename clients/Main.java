@@ -75,7 +75,6 @@ public class Main
         LoginClient.main();//start login program for employee
       }
     });
-
   }
   public static void main(String[] args) {
     startup(); //run the program
