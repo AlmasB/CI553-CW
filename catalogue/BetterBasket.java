@@ -2,6 +2,7 @@ package catalogue;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.*;
 
 /**
  * Write a description of class BetterBasket here.
@@ -17,58 +18,51 @@ public class BetterBasket extends Basket implements Serializable
 {
   private static final long serialVersionUID = 1L;
   
-	public boolean add(Product pr) {
-		// Multiple items of the same type grouped here - use of try catch loop, for
-		// loop, or while loop considered
-		int i = 0;
-		boolean itemExists = false;
-
-		while (i < this.size()) {
-			if (this.get(i).getProductNum().equals(pr.getProductNum())) {
-				// if item already exists, update quantity and set to true
-				this.get(i).setQuantity(this.get(i).getQuantity() + pr.getQuantity());
-				itemExists = true;
-				break; // loop exists as the item has been located
+	public boolean add(Product p1) {
+		//searching for existing products matching record
+		for(Product p2: this) {
+			if(p1.getProductNum().equals(p2.getProductNum())) {
+				//been found, now update quantity and return prod
+				p2.setQuantity(p2.getQuantity()+p1.getQuantity());
+				return(true);
 			}
-			i++;
 		}
-		if (!itemExists) {
-			// if the item does not exist within basket, add it.
-			super.add(pr);
-		}
-
-		// Sorts the basket oonce item has been added to the basket
-		Collections.sort(this, BetterBasket::sort);
-
-		// adds product
+		super.add(p1);
+		Collections.sort(this, BetterBasket::Sort);
 		return true;
 	}
-  
-	// improved method of removing item from basket
-	@Override
-  public boolean remove (Product pr) {
-	  int j = 0;
-	  boolean removeItem = false;
-	  
-	  while(j<this.size()) {
-		  if()
-		  
+	
+	public static int Sort (Product p1, Product p2) { //the method is called by Collections.sort. Passes two parameters (product i and i+1), these are compared/switched and then returned 
+		  return p1.getProductNum().compareTo(p2.getProductNum());//compare to is passed as an int (+/-ve determined by results of comparison)
 	  }
-	return removeItem;
-	  
-  }
+	
+  
+//	// improved method of removing item from basket
+//	@Override
+//  public boolean remove (Product pr) {
+//	  int j = 0;
+//	  boolean removeItem = false;
+//	  
+//	  while(j<this.size()) {
+//		  if()
+//			  this.get(j).setQuantity(this.get(j).getQuantity() - pr.getQuantity()); 
+//		  
+//	  }
+//	return removeItem;
+//	  
+//  }
   
   
-	// create method to check if item is within basket
-	public boolean itemList(Product pr) {
-		for (int i = 0; i <= this.size(); i++) {
-			if (this.get(i).getProductNum().equals(pr.getProductNum())) {
-				// if statement, to first get product number, index++
-				return true;
-			}
-		}
-		return false;
-	}
+//	// create method to check if item is within basket
+//	public boolean itemList(Product pr) {
+//		for (int i = 0; i <= this.size(); i++) {
+//			if (this.get(i).getProductNum().equals(pr.getProductNum())) {
+//				// if statement, to first get product number, index++
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	private static <T extends Object> int sort(T t1, T t2) {
 		return 0;
