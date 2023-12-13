@@ -32,8 +32,39 @@ public class BetterBasket extends Basket implements Serializable
 		return true;
 	}
 	
-	public static int Sort (Product p1, Product p2) { //the method is called by Collections.sort. Passes two parameters (product i and i+1), these are compared/switched and then returned 
-		  return p1.getProductNum().compareTo(p2.getProductNum());//compare to is passed as an int (+/-ve determined by results of comparison)
+	
+	
+//second attempt to create a better improved method for removing items from basket
+	public boolean remove (Product p1) {
+		//search for existing products matching 
+		for (Product p2: this) {
+			if(p1.getProductNum().equals(p2.getProductNum())) {
+				//product found, decrement quantity 
+				int newQuantity = p2.getQuantity() - p1.getQuantity();
+				if (newQuantity < 0) {
+					//Remove prod if quantity is <= 0.
+					this.remove(p2);
+					return true;
+				} else {
+					//updates quantity, setting new amount
+					p2.setQuantity(newQuantity);
+					return true;
+				}
+			}
+		}
+		Collections.sort(this, BetterBasket::Sort);
+		return false; 
+		//product not detected within basket
+	}
+	
+	
+	
+	
+	public static int Sort (Product p1, Product p2) { 
+		//the method is called by Collections.sort. Passes two parameters 
+		//(product i and i+1), these are compared/switched and then returned 
+		  return p1.getProductNum().compareTo(p2.getProductNum());
+		  //compare to is passed as an int (+/-ve determined by results of comparison)
 	  }
 	
   
@@ -51,19 +82,20 @@ public class BetterBasket extends Basket implements Serializable
 //	return removeItem;
 //	  
 //  }
-  
-  
-//	// create method to check if item is within basket
-//	public boolean itemList(Product pr) {
-//		for (int i = 0; i <= this.size(); i++) {
-//			if (this.get(i).getProductNum().equals(pr.getProductNum())) {
-//				// if statement, to first get product number, index++
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+	
+	  
+	// create method to check if item is within basket
+	public boolean itemList(Product pr) {
+		for (int i = 0; i <= this.size(); i++) {
+			if (this.get(i).getProductNum().equals(pr.getProductNum())) {
+				// if statement, to first get product number, index++
+				return true;
+			}
+		}
+		return false;
+	}
 
+	
 	private static <T extends Object> int sort(T t1, T t2) {
 		return 0;
 	}
