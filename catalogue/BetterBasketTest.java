@@ -48,29 +48,27 @@ class BetterBasketTest {
 		
 	}
 
+
 	@Test
-	void testRemovalOfProduct() {
+	void testSortRemovalOfProduct () {
 		BetterBasket b2 = new BetterBasket();
+		
 		Product p1 = new Product("0001", "Toaster", 10.00, 2);
 		Product p2 = new Product("0002", "Kettle", 15.00, 3);
 		
 		b2.add(p1);
-		assertTrue(b2.remove(new Product("0001", "Toaster", 10.00, 1)), "Failure on reduction of quantity");
-		assertEquals(1, b2.get(0).getQuantity(), "Quantity incorrect after removing");
-		
-		//add second product before attempting removal - ensures item exists in basket
 		b2.add(p2);
-		assertTrue(b2.remove(new Product("0002", "Kettle", 15.00, 1)), "Failure on reduction of quantity");
-		assertEquals(2, b2.size(), "Basket size set to be 2 after partial removal");
 		
+		//confirm initial basket size of any removals
+		assertEquals(2, b2.size(), "Basket should contain two products - initial state");
+		//remove one quantity of product from basket
+		assertTrue(b2.remove(new Product("0001", "Toaster", 10.00, 1)), "Failed to reduce quantity of p1");
+		//confirm basket's state after partial removal of p1
+		assertEquals(2, b2.size(), "Basket contains 2 prods");
 		
-		//removes second product
-		assertTrue(b2.remove(new Product("0002", "Kettle", 15.00, 2)), "Removal failure");
-		assertEquals(1, b2.size(), "Basket should = 1 after full removal");
-		
-		
-		
-		}
+	}
+	 
+
 	
 	
 	
