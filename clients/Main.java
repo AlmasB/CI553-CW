@@ -74,10 +74,12 @@ class Main
     CustomerModel model      = new CustomerModel(mlf);
     CustomerView view        = new CustomerView( window, mlf, pos.width, pos.height );
     CustomerController cont  = new CustomerController( model, view );
+    
     view.setController( cont );
 
     model.addObserver( view );       // Add observer to the model
     window.setVisible(true);         // start Screen
+    model.askForUpdate();    // Initial display
   }
 
   /** 
@@ -94,6 +96,7 @@ class Main
      BetterCashierModel model = new BetterCashierModel(mlf); // Change here
      CashierView view = new CashierView(window, mlf, pos.width, pos.height);
      CashierController cont = new CashierController(model, view);
+     
      view.setController(cont);
 
      model.addObserver(view); // Add observer to the model

@@ -3,10 +3,17 @@ package catalogue;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Currency;
+import java.util.Formatter;
+import java.util.Locale;
+
+
 
 public class BetterBasket extends Basket implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+
 
     @Override
     public boolean add(Product pr) {

@@ -1,6 +1,7 @@
 package clients.cashier;
 
 import catalogue.Basket;
+import catalogue.BetterBasket;
 import middle.MiddleFactory;
 import middle.OrderProcessing;
 import middle.StockReadWriter;
@@ -23,6 +24,7 @@ public class CashierView implements Observer
   private static final String CHECK  = "Check";
   private static final String BUY    = "Buy";
   private static final String BOUGHT = "Bought";
+ 
 
   private final JLabel      theAction  = new JLabel();
   private final JTextField  theInput   = new JTextField();
@@ -112,10 +114,10 @@ public class CashierView implements Observer
   @Override
   public void update( Observable modelC, Object arg )
   {
-    CashierModel model  = (CashierModel) modelC;
+    BetterCashierModel model  = (BetterCashierModel) modelC;
     String      message = (String) arg;
     theAction.setText( message );
-    Basket basket = model.getBasket();
+    BetterBasket basket = model.getBetterBasket();
     if ( basket == null )
       theOutput.setText( "Customers order" );
     else

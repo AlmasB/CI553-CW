@@ -15,7 +15,7 @@ import java.util.Observable;
  */
 public class CashierModel extends Observable
 {
-  protected enum State { process, checked }
+  public enum State { process, checked }
 
   protected State       theState   = State.process;   // Current state
   protected Product     theProduct = null;            // Current product

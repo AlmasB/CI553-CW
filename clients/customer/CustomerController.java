@@ -38,6 +38,14 @@ public class CustomerController
     model.doClear();
   }
 
-  
+public void dobuyOnline() {
+	
+    model.dobuyOnline(); 	
 }
+
+	
+}
+
+  
+
 

@@ -1,9 +1,11 @@
 package clients.customer;
 
-import catalogue.Basket;
+import catalogue.BetterBasket;
 import catalogue.Product;
+import clients.cashier.CashierModel.State;
 import debug.DEBUG;
 import middle.MiddleFactory;
+import middle.OrderException;
 import middle.OrderProcessing;
 import middle.StockException;
 import middle.StockReader;
@@ -18,13 +20,16 @@ import java.util.Observable;
  */
 public class CustomerModel extends Observable
 {
+protected enum State { process, checked }
+
+  protected State       theState   = State.process;   // Current state
   private Product     theProduct = null;          // Current product
-  private Basket      theBasket  = null;          // Bought items
+  protected BetterBasket      theBetterBasket  = null;          // Bought items
 
-  private String      pn = "";                    // Product being processed
+  private String      pn = "  ";                    // Product being processed
 
-  private StockReader     theStock     = null;
-  private OrderProcessing theOrder     = null;
+  protected StockReader     theStock     = null;
+  protected OrderProcessing theOrder     = null;
   private ImageIcon       thePic       = null;
 
   /*
@@ -36,21 +41,23 @@ public class CustomerModel extends Observable
     try                                          // 
     {  
       theStock = mf.makeStockReader();           // Database access
+      theOrder = mf.makeOrderProcessing();       // Initialize theOrder
+
     } catch ( Exception e )
     {
       DEBUG.error("CustomerModel.constructor\n" +
                   "Database not created?\n%s\n", e.getMessage() );
     }
-    theBasket = makeBasket();                    // Initial Basket
+    theBetterBasket = makeBetterBasket();                    // Initial Basket
   }
   
   /**
    * return the Basket of products
    * @return the basket of products
    */
-  public Basket getBasket()
+  public BetterBasket getBetterBasket()
   {
-    return theBasket;
+    return theBetterBasket;
   }
 
   /**
@@ -59,7 +66,7 @@ public class CustomerModel extends Observable
    */
   public void doCheck(String productNum )
   {
-    theBasket.clear();                          // Clear s. list
+    theBetterBasket.clear();                          // Clear s. list
     String theAction = "";
     pn  = productNum.trim();                    // Product no.
     int    amount  = 1;                         //  & quantity
@@ -76,7 +83,7 @@ public class CustomerModel extends Observable
               pr.getPrice(),                    //    price
               pr.getQuantity() );               //    quantity
           pr.setQuantity( amount );             //   Require 1
-          theBasket.add( pr );                  //   Add to basket
+          theBetterBasket.add( pr );                  //   Add to basket
           thePic = theStock.getImage( pn );     //    product
         } else {                                //  F
           theAction =                           //   Inform
@@ -101,7 +108,7 @@ public class CustomerModel extends Observable
   public void doClear()
   {
     String theAction = "";
-    theBasket.clear();                        // Clear s. list
+    theBetterBasket.clear();                        // Clear s. list
     theAction = "Enter Product Number";       // Set display
     thePic = null;                            // No picture
     setChanged(); notifyObservers(theAction);
@@ -117,9 +124,9 @@ public class CustomerModel extends Observable
   }
   
   /**
-   * ask for update of view callled at start
+   * ask for update of view called at start
    */
-  private void askForUpdate()
+  public void askForUpdate()
   {
     setChanged(); notifyObservers("START only"); // Notify
   }
@@ -128,9 +135,50 @@ public class CustomerModel extends Observable
    * Make a new Basket
    * @return an instance of a new Basket
    */
-  protected Basket makeBasket()
+  protected BetterBasket makeBetterBasket()
   {
-    return new Basket();
+    return new BetterBasket();
   }
-}
+
+	
+  public void dobuyOnline() {
+	    String theAction = "";
+	    int amount = 1; // & quantity
+	    try {
+	        if (theStock.exists(pn) && theBetterBasket != null && theBetterBasket.size() >= 1) {
+	            theOrder.newOrder(theBetterBasket); // Process order
+	            theBetterBasket.clear(); // Clear the basket after processing the order
+	            theState = State.checked; // Update the state to 'checked'
+	        } else {
+	            theState = State.process; // Update the state to 'process' if the condition is not met
+	        }
+	        theAction = "Next customer"; // New Customer
+	    } catch (OrderException | StockException e) {
+	        theBetterBasket = null;
+	        setChanged();
+	        notifyObservers(theAction); // Notify
+	    }
+	}
+  public void askForUpdate1(){
+  {
+    setChanged(); notifyObservers("Welcome");}}
+  
+
+	 protected void makeBasketIfReq() {
+	    if (theBetterBasket == null) {
+	      try {
+	        int uon = theOrder.uniqueNumber(); // Unique order num.
+	        theBetterBasket = makeBetterBasket(); // basket list
+	        theBetterBasket.setOrderNum(uon); // Add an order number
+	      } catch (OrderException e) {
+	        DEBUG.error("Comms failure\n" +
+	                    "CashierModel.makeBasket()\n%s", e.getMessage());
+	      }
+	    }
+	 }
+	}
+
+	
+
+
 
