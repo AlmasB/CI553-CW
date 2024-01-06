@@ -40,7 +40,7 @@ public class CustomerController
 
 public void dobuyOnline() {
 	
-    model.dobuyOnline(); 	
+    model.doBuyOnline(); 	
 }
 
 	

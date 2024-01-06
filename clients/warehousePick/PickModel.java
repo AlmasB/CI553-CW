@@ -17,7 +17,8 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class PickModel extends Observable
 {
-  private AtomicReference<Basket> theBasket = new AtomicReference<>(); 
+  private AtomicReference<Basket> theBasket = new AtomicReference<>();
+
 
   private StockReadWriter theStock   = null;
   private OrderProcessing theOrder   = null;
@@ -41,9 +42,11 @@ public class PickModel extends Observable
     }
 
     theBasket.set( null );                  // Initial Basket
+
     // Start a background check to see when a new order can be picked
     new Thread( () -> checkForNewOrder() ).start();
   }
+  
   
   
   /**
@@ -119,7 +122,9 @@ public class PickModel extends Observable
   {
     return theBasket.get();
   }
-
+  
+  
+	
   /**
    * Process a picked Order
    */
@@ -149,6 +154,12 @@ public class PickModel extends Observable
     setChanged(); notifyObservers(theAction);
   }
 }
+
+
+
+
+
+
 
 
 

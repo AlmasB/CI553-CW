@@ -2,7 +2,7 @@ package clients.customer;
 
 import catalogue.BetterBasket;
 import catalogue.Product;
-import clients.cashier.CashierModel.State;
+import clients.cashier.BetterCashierModel;
 import debug.DEBUG;
 import middle.MiddleFactory;
 import middle.OrderException;
@@ -23,8 +23,9 @@ public class CustomerModel extends Observable
 protected enum State { process, checked }
 
   protected State       theState   = State.process;   // Current state
-  private Product     theProduct = null;          // Current product
+  protected Product     theProduct = null;          // Current product
   protected BetterBasket      theBetterBasket  = null;          // Bought items
+
 
   private String      pn = "  ";                    // Product being processed
 
@@ -113,7 +114,45 @@ protected enum State { process, checked }
     thePic = null;                            // No picture
     setChanged(); notifyObservers(theAction);
   }
-  
+  public void doBuyOnline() {
+	  String theAction = "";
+	    try {
+	        if (theBetterBasket == null || theBetterBasket.isEmpty()) {
+	            throw new OrderException("Basket is empty");
+	        }
+
+	        if (theState != State.checked) {  // Ensure the state is checked
+	             theAction ="Check if OK with customer first";
+	        }
+
+	        // Check stock availability for each product in the basket
+	        for (Product product : theBetterBasket) {
+	            if (!theStock.exists(product.getProductNum()) || 
+	                theStock.getDetails(product.getProductNum()).getQuantity() < product.getQuantity()) {
+	                throw new StockException("Insufficient stock for product: " + product.getDescription());
+	            }
+	        }
+
+	        // Generate and set the order number
+	        int orderNumber = theOrder.uniqueNumber();
+	        theBetterBasket.setOrderNum(orderNumber);
+
+	        theOrder.newOrder(theBetterBasket); // Process the order
+
+	        theBetterBasket.clear(); // Clear the basket after the order is placed
+	        theState = State.process; // Reset the state
+	        setChanged();
+	        notifyObservers("Order placed successfully with order number: " + orderNumber);
+	    }
+	    catch (OrderException | StockException e) {
+	        DEBUG.error("CustomerModel.doBuyOnline()\n%s", e.getMessage());
+	        setChanged();
+	        notifyObservers("Error: " + e.getMessage());
+	    }
+	}
+
+
+ 
   /**
    * Return a picture of the product
    * @return An instance of an ImageIcon
@@ -140,43 +179,21 @@ protected enum State { process, checked }
     return new BetterBasket();
   }
 
-	
-  public void dobuyOnline() {
-	    String theAction = "";
-	    int amount = 1; // & quantity
-	    try {
-	        if (theStock.exists(pn) && theBetterBasket != null && theBetterBasket.size() >= 1) {
-	            theOrder.newOrder(theBetterBasket); // Process order
-	            theBetterBasket.clear(); // Clear the basket after processing the order
-	            theState = State.checked; // Update the state to 'checked'
-	        } else {
-	            theState = State.process; // Update the state to 'process' if the condition is not met
-	        }
-	        theAction = "Next customer"; // New Customer
-	    } catch (OrderException | StockException e) {
-	        theBetterBasket = null;
-	        setChanged();
-	        notifyObservers(theAction); // Notify
-	    }
-	}
   public void askForUpdate1(){
   {
     setChanged(); notifyObservers("Welcome");}}
+
+
+	
+}
+
   
 
-	 protected void makeBasketIfReq() {
-	    if (theBetterBasket == null) {
-	      try {
-	        int uon = theOrder.uniqueNumber(); // Unique order num.
-	        theBetterBasket = makeBetterBasket(); // basket list
-	        theBetterBasket.setOrderNum(uon); // Add an order number
-	      } catch (OrderException e) {
-	        DEBUG.error("Comms failure\n" +
-	                    "CashierModel.makeBasket()\n%s", e.getMessage());
-	      }
-	    }
-	 }
-	}
+	 
+	      
+	    
+	 
+	
 
 	
 

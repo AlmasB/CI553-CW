@@ -109,7 +109,7 @@ public class CashierModel extends Observable
         theAction = "Check if OK with customer first";
       } else {
         boolean stockBought =                   // Buy
-          theStock.buyStock(                    //  however
+          theStock.buyStock(                      //  however
             theProduct.getProductNum(),         //  may fail              
             theProduct.getQuantity() );         //
         if ( stockBought )                      // Stock bought

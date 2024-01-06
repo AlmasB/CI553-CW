@@ -98,7 +98,7 @@ public class CustomerView implements Observer
     theBtbuyOnline.setBounds( 16, 25+60*4, 80, 40 );    // Buy button
     theBtbuyOnline.addActionListener(                   // Call back code
       e -> cont.dobuyOnline() );
-    cp.add( theBtbuyOnline );                           //  Add to canvas
+    cp.add( theBtbuyOnline );                      //  Add to canvas
     
 
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area

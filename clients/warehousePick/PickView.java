@@ -3,6 +3,7 @@ package clients.warehousePick;
 import catalogue.Basket;
 import middle.MiddleFactory;
 import middle.OrderProcessing;
+import clients.customer.CustomerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,4 +99,7 @@ public class PickView implements Observer
     }
   }
 
+
 }
+
+  
