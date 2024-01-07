@@ -25,6 +25,7 @@ public class CashierModel extends Observable
 
   protected StockReadWriter theStock     = null;
   protected OrderProcessing theOrder     = null;
+private Object thePic;
 
   /**
    * Construct the model of the Cashier
@@ -197,6 +198,8 @@ public class CashierModel extends Observable
   {
     return new Basket();
   }
+
+
 
 }
 

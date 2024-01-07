@@ -1,6 +1,5 @@
 package clients.cashier;
 
-import catalogue.Basket;
 import catalogue.BetterBasket;
 import middle.MiddleFactory;
 import middle.OrderProcessing;
@@ -24,6 +23,7 @@ public class CashierView implements Observer
   private static final String CHECK  = "Check";
   private static final String BUY    = "Buy";
   private static final String BOUGHT = "Bought";
+  private static final String REMOVE = "Remove";
  
 
   private final JLabel      theAction  = new JLabel();
@@ -33,6 +33,8 @@ public class CashierView implements Observer
   private final JButton     theBtCheck = new JButton( CHECK );
   private final JButton     theBtBuy   = new JButton( BUY );
   private final JButton     theBtBought= new JButton( BOUGHT );
+  private final JButton     theBtRemove= new JButton( REMOVE );
+
 
   private StockReadWriter theStock     = null;
   private OrderProcessing theOrder     = null;
@@ -73,8 +75,15 @@ public class CashierView implements Observer
     theBtBuy.addActionListener(                     // Call back code
       e -> cont.doBuy() );
     cp.add( theBtBuy );                             //  Add to canvas
-
-    theBtBought.setBounds( 16, 25+60*3, 80, 40 );   // Clear Button
+    
+    
+    theBtRemove.setBounds( 16, 25+60*2, 80, 40 );      // Clear button 
+    theBtRemove.addActionListener(                     // Call back code
+      e -> cont.doRemove(theInput.getText()) );
+    cp.add( theBtRemove );                             //  Add to canvas
+    
+    
+    theBtBought.setBounds( 16, 25+60*3, 80, 40 );   // Bought Button
     theBtBought.addActionListener(                  // Call back code
       e -> cont.doBought() );
     cp.add( theBtBought );                          //  Add to canvas

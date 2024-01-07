@@ -2,6 +2,7 @@ package clients.cashier;
 
 import catalogue.BetterBasket;
 import clients.cashier.CashierModel.State;
+import clients.customer.CustomerModel;
 import debug.DEBUG;
 import middle.MiddleFactory;
 import middle.OrderException;
@@ -16,6 +17,7 @@ import middle.StockException;
 public class BetterCashierModel extends CashierModel {
 
     private BetterBasket theBetterBasket = null; // Bought items
+	private Object thePic;
 
     public BetterCashierModel(MiddleFactory mf) {
         super(mf);
@@ -29,6 +31,7 @@ public class BetterCashierModel extends CashierModel {
             theState = State.process;
         } // Current state
     }
+    
     /**
      * Buy the product
      */
@@ -93,6 +96,34 @@ public class BetterCashierModel extends CashierModel {
       }
       theBetterBasket = null;
       setChanged(); notifyObservers(theAction); // Notify
+    }
+    
+    /**
+     * Remove a selected product from the basket
+     * @param productNum The product number to be removed
+     */
+    public void doRemove(String productNum)
+    {
+        String theAction = "";
+        if (theBetterBasket != null) {
+            boolean found = false;
+            for (int i = 0; i < theBetterBasket.size(); i++) {
+                if (theBetterBasket.get(i).getProductNum().equals(productNum)) {
+                    theBetterBasket.remove(i); // Remove selected item
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                theAction = "Removed product number " + productNum;
+            } else {
+                theAction = "Product number " + productNum + " not found in basket";
+            }
+        } else {
+            theAction = "Basket is empty";
+        }
+        thePic = null; // No picture
+        setChanged(); notifyObservers(theAction);
     }
 
     /**

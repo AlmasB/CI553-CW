@@ -8,7 +8,8 @@ package clients.cashier;
 
 public class CashierController
 {
-  private CashierModel model = null;
+  //private CashierModel model = null;
+  private BetterCashierModel model = null;
   private CashierView  view  = null;
 
   /**
@@ -16,7 +17,7 @@ public class CashierController
    * @param model The model 
    * @param view  The view from which the interaction came
    */
-  public CashierController( CashierModel model, CashierView view )
+  public CashierController( BetterCashierModel model, CashierView view )
   {
     this.view  = view;
     this.model = model;
@@ -45,5 +46,12 @@ public class CashierController
   public void doBought()
   {
     model.doBought();
+  }
+  /**
+   * Bought interaction from view
+   */
+  public void doRemove(String productNum)
+  {
+    model.doRemove(productNum);
   }
 }
