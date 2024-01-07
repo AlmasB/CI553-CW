@@ -31,7 +31,7 @@ protected enum State { process, checked }
 
   protected StockReader     theStock     = null;
   protected OrderProcessing theOrder     = null;
-  private ImageIcon       thePic       = null;
+  protected ImageIcon       thePic       = null;
 
   /*
    * Construct the model of the Customer

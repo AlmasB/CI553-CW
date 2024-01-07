@@ -28,7 +28,12 @@ public class CollectController
   public void doCollect( String orderNum )
   {
     model.doCollect(orderNum);
-  } 
+  }
+
+public void doReceipt() {
+	model.doReceipt();
+	
+} 
 }
 
 
