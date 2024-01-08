@@ -1,8 +1,6 @@
 package clients.cashier;
 
 import catalogue.BetterBasket;
-import clients.cashier.CashierModel.State;
-import clients.customer.CustomerModel;
 import debug.DEBUG;
 import middle.MiddleFactory;
 import middle.OrderException;
@@ -17,7 +15,6 @@ import middle.StockException;
 public class BetterCashierModel extends CashierModel {
 
     private BetterBasket theBetterBasket = null; // Bought items
-	private Object thePic;
 
     public BetterCashierModel(MiddleFactory mf) {
         super(mf);
@@ -26,7 +23,7 @@ public class BetterCashierModel extends CashierModel {
                 theStock = mf.makeStockReadWriter(); // Database access
                 theOrder = mf.makeOrderProcessing(); // Process order
             } catch (Exception e) {
-                DEBUG.error("CashierModel.constructor\n%s", e.getMessage());
+                DEBUG.error("BetterCashierModel.constructor\n%s", e.getMessage());
             }
             theState = State.process;
         } // Current state
@@ -38,7 +35,6 @@ public class BetterCashierModel extends CashierModel {
     public void doBuy()
     {
       String theAction = "";
-      int    amount  = 1;                         //  & quantity
       try
       {
         if ( theState != State.checked )          // Not checked
@@ -76,7 +72,6 @@ public class BetterCashierModel extends CashierModel {
     public void doBought()
     {
       String theAction = "";
-      int    amount  = 1;                       //  & quantity
       try
       {
         if ( theBetterBasket != null &&
@@ -132,7 +127,6 @@ public class BetterCashierModel extends CashierModel {
         } else {
             theAction = "Basket is empty";
         }
-        // thePic = null; // No picture, if this is relevant to your context
         setChanged(); notifyObservers(theAction);
     }
 

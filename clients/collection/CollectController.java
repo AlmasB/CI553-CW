@@ -30,8 +30,8 @@ public class CollectController
     model.doCollect(orderNum);
   }
 
-public void doReceipt() {
-	model.doReceipt();
+public void doReceipt(int orderNumber) {
+	model.doReceipt(orderNumber);
 	
 } 
 }

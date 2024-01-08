@@ -16,6 +16,7 @@ import java.util.Observer;
 
 public class CollectView implements Observer
 {
+
  private static final String COLLECT = "Collect";
  private static final String RECEIPT = "Receipt";
 
@@ -63,10 +64,15 @@ public class CollectView implements Observer
       e -> cont.doCollect( theInput.getText()) );
     cp.add( theBtCollect );                         //  Add to canvas
     
-    theBtReceipt.setBounds( 16, 25+60*1, 80, 40 );  // Receipt Button
-    theBtReceipt.addActionListener(                 // Call back code
-      e -> cont.doReceipt());
+    theBtReceipt.setBounds( 16, 25+60*1, 80, 40 );  // Receipt Button   
+	theBtReceipt.addActionListener(                 // Call back code
+      e -> { // Obtain the order number. This is an example; modify as needed for your application.
+     String orderNumberStr = theInput.getText(); // Assuming the order number is entered in theInput
+      int orderNumber = Integer.parseInt(orderNumberStr); // Convert the string to an integer 
+      cont.doReceipt(orderNumber);
+      });
     cp.add( theBtReceipt );                         //  Add to canvas
+      
 
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area
     theAction.setText( "" );                        // Blank
@@ -85,7 +91,9 @@ public class CollectView implements Observer
     theInput.requestFocus();                        // Focus is here
   }  
   
-  public void setController( CollectController c )
+
+
+public void setController( CollectController c )
   {
     cont = c;
   }
@@ -107,3 +115,4 @@ public class CollectView implements Observer
   }
 
 }
+

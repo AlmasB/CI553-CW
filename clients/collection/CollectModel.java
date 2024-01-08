@@ -31,6 +31,8 @@ public class CollectModel extends Observable
   private String      theAction   = "";
   private String      theOutput   = "";
   private OrderProcessing theOrder     = null;
+  private boolean isReceiptGenerated = false;
+
 
   /*
    * Construct the model of the Collection client
@@ -123,29 +125,34 @@ public class CollectModel extends Observable
             e.printStackTrace();
         }
     }
-  
-  
-  public void doReceipt() {
-	  SwingUtilities.invokeLater(() -> {
-          try {
-              File fileToOpen = new File("OrderInfo/Orders/Order.txt"); // Replace with your file path
-              if (fileToOpen.exists()) {
-                  Desktop.getDesktop().open(fileToOpen);
-              } else {
-                  JOptionPane.showMessageDialog(null,
-                          "Receipt file not found.", "Error",
-                          JOptionPane.ERROR_MESSAGE);
-              }
-          } catch (IOException exception) {
-              JOptionPane.showMessageDialog(null,
-                      "An error occurred while opening the file: " + exception.getMessage(),
-                      "Error", JOptionPane.ERROR_MESSAGE);
-          }
-      });
+    public void doReceipt(int orderNumber) {
+        SwingUtilities.invokeLater(() -> {
+            File fileToOpen = new File("OrderInfo/Orders/Order.txt"); // Replace with your file path
+
+            try {
+                // Clear the content of the file
+                new FileWriter(fileToOpen, false).close();
+
+                // Generate the new receipt
+                writeReceipt(orderNumber);
+
+                // Open the file for viewing
+                if (fileToOpen.exists()) {
+                    Desktop.getDesktop().open(fileToOpen);
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Receipt file not found.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException exception) {
+                JOptionPane.showMessageDialog(null,
+                        "An error occurred: " + exception.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
 	  
-  }
-
-
+   
   /**
    * The output to be displayed
    * @return The string to be displayed
