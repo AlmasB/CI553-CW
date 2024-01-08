@@ -102,27 +102,37 @@ public class BetterCashierModel extends CashierModel {
      * Remove a selected product from the basket
      * @param productNum The product number to be removed
      */
-    public void doRemove(String productNum)
-    {
+    public void doRemove(String productNum) {
         String theAction = "";
         if (theBetterBasket != null) {
             boolean found = false;
+            int quantityToRemove = 0;
             for (int i = 0; i < theBetterBasket.size(); i++) {
                 if (theBetterBasket.get(i).getProductNum().equals(productNum)) {
-                    theBetterBasket.remove(i); // Remove selected item
-                    found = true;
-                    break;
+                    quantityToRemove = theBetterBasket.get(i).getQuantity(); // Get the quantity of the product
+                    try {
+                        if (theStock.exists(productNum)) {  // Check if product exists in stock
+                            theStock.addStock(productNum, quantityToRemove);  // Increase stock by the quantity
+                            theBetterBasket.remove(i); // Remove product from basket
+                            found = true;
+                            break;
+                        }
+                    } catch (StockException e) {
+                        theAction = e.getMessage();
+                        setChanged(); notifyObservers(theAction);
+                        return;
+                    }
                 }
             }
             if (found) {
-                theAction = "Removed product number " + productNum;
+                theAction = "Removed product number " + productNum + " and updated stock by " + quantityToRemove + " units";
             } else {
                 theAction = "Product number " + productNum + " not found in basket";
             }
         } else {
             theAction = "Basket is empty";
         }
-        thePic = null; // No picture
+        // thePic = null; // No picture, if this is relevant to your context
         setChanged(); notifyObservers(theAction);
     }
 

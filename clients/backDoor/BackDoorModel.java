@@ -20,7 +20,7 @@ public class BackDoorModel extends Observable
   private Basket      theBasket  = null;            // Bought items
   private String      pn = "";                      // Product being processed
 
-  private StockReadWriter theStock     = null;
+  protected StockReadWriter theStock     = null;
 
   /*
    * Construct the model of the back door client
