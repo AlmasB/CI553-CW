@@ -3,8 +3,6 @@
 
 package clients.customer;
 
-import catalogue.Basket;
-import catalogue.BetterBasket;
 import clients.Picture;
 import middle.MiddleFactory;
 import middle.StockReader;
@@ -27,6 +25,9 @@ public class CustomerView implements Observer
     public static final String CHECK  = "Check";
     public static final String CLEAR  = "Clear";
     public static final String BuyOnline = "Buy Online";
+    public static final String CATALOGUE = "Catalogue";
+	public static final String RESIZE = "Resize";
+
   }
 
   private static final int H = 300;       // Height of window pixels
@@ -39,13 +40,15 @@ public class CustomerView implements Observer
   private final JButton     theBtCheck = new JButton( Name.CHECK );
   private final JButton     theBtClear = new JButton( Name.CLEAR );
   private final JButton     theBtbuyOnline  =  new JButton (Name.BuyOnline);
-  private final JButton theBtResize = new JButton("Resize Window");
+  private final JButton     theBtCatalogue  =  new JButton (Name.CATALOGUE);
+  private final JButton theBtResize = new JButton(Name.RESIZE );
 
   private Picture thePicture = new Picture(80,80);
   private StockReader theStock   = null;
   private CustomerController cont= null;
   private Container rootWindow;  // Add this line to declare rootWindow
   private boolean isIncreased = false;  // Added flag to track window size
+  
 
 
 
@@ -91,16 +94,23 @@ public class CustomerView implements Observer
     theBtResize.addActionListener(
        e -> resizeWindow());  // Call a method to resize the window
     cp.add(theBtResize);  // Add to canvas
-    
-    rootWindow.setSize(W, H);  // Initial size of Window
-    rootWindow.setLocation(x, y);
+   
  
-    theBtbuyOnline.setBounds( 16, 25+60*4, 80, 40 );    // Buy button
+    theBtbuyOnline.setBounds( 16, 25+60*4, 120, 40 );    // Buy button
     theBtbuyOnline.addActionListener(                   // Call back code
       e -> cont.dobuyOnline() );
     cp.add( theBtbuyOnline );                      //  Add to canvas
     
+    int gap = 10;  // Gap between buttons
+    theBtCatalogue.setBounds(16 + 150 + gap, 25+60*4, 120, 40);  // Position next to Buy button with updated size
+    theBtCatalogue.addActionListener(
+      e -> cont.doCatalogue() );
+    cp.add(theBtCatalogue);  // Add to canvas
 
+    
+    rootWindow.setSize(W, H);  // Initial size of Window
+    rootWindow.setLocation(x, y);
+    
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area
     theAction.setText( "" );                        //  Blank
     cp.add( theAction );                            //  Add to canvas
@@ -163,15 +173,17 @@ public class CustomerView implements Observer
    * Method to resize the window to accommodate the "Buy" button
    */
   private void resizeWindow() {
-	  if (rootWindow != null) {
-          int newHeight;
-          if (isIncreased) {
-              newHeight = H - 20;  // Decrease the height by 20 pixels
-          } else {
-              newHeight = H + 60;  // Increase the height by 60 pixels
-          }
-          rootWindow.setSize(W, newHeight);
-          isIncreased = !isIncreased;  // Toggle the flag
-  }
-}
+	    if (rootWindow != null) {
+	        Dimension currentSize = rootWindow.getSize();
+	        int newHeight;
+	        if (!isIncreased) {
+	            newHeight = currentSize.height + 45;  // Increase the height by 60 pixels
+	        } else {
+	            newHeight = currentSize.height - 45;  // Decrease the height by 60 pixels
+	        }
+	        rootWindow.setSize(W, newHeight);
+	        isIncreased = !isIncreased;  // Toggle the flag
+	    }
+	}
+
 }

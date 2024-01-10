@@ -2,6 +2,8 @@ package middle;
 
 import catalogue.Product;
 
+import java.util.List;
+
 import javax.swing.*;
 
 /**
@@ -39,4 +41,7 @@ public interface StockReader
    */
   
   ImageIcon getImage(String pNum) throws StockException;
+  
+  
+
 }

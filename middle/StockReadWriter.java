@@ -1,5 +1,6 @@
 package middle;
 
+
 import catalogue.Product;
 
 /**
@@ -35,5 +36,6 @@ public interface StockReadWriter extends StockReader
    * @throws middle.StockException if issue
    */
   void modifyStock(Product detail) throws StockException;
+  
 
 }

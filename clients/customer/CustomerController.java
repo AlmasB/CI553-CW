@@ -43,6 +43,10 @@ public void dobuyOnline() {
     model.doBuyOnline(); 	
 }
 
+public void doCatalogue() {
+	model.doCatalogue() ;
+}
+
 	
 }
 

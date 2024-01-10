@@ -1,8 +1,8 @@
 package clients.customer;
 
 import catalogue.BetterBasket;
+import catalogue.Music;
 import catalogue.Product;
-import clients.cashier.BetterCashierModel;
 import debug.DEBUG;
 import middle.MiddleFactory;
 import middle.OrderException;
@@ -10,7 +10,13 @@ import middle.OrderProcessing;
 import middle.StockException;
 import middle.StockReader;
 
+
+import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.util.List;
 import java.util.Observable;
 
 /**
@@ -25,7 +31,10 @@ protected enum State { process, checked }
   protected State       theState   = State.process;   // Current state
   protected Product     theProduct = null;          // Current product
   protected BetterBasket      theBetterBasket  = null;          // Bought items
+  
 
+
+  private Music musicPlayer = new Music();
 
   private String      pn = "  ";                    // Product being processed
 
@@ -39,6 +48,8 @@ protected enum State { process, checked }
    */
   public CustomerModel(MiddleFactory mf)
   {
+    musicPlayer.playMusic("C:/Users/zayan/OneDrive/Documents/Year 2/musicfile.wav");
+
     try                                          // 
     {  
       theStock = mf.makeStockReader();           // Database access
@@ -114,6 +125,12 @@ protected enum State { process, checked }
     thePic = null;                            // No picture
     setChanged(); notifyObservers(theAction);
   }
+  
+ 
+  
+  /**
+   * A buy online function allowing user to buy product from client GUI
+   */
   public void doBuyOnline() {
 	  String theAction = "";
 	    try {
@@ -150,6 +167,70 @@ protected enum State { process, checked }
 	        notifyObservers("Error: " + e.getMessage());
 	    }
 	}
+  public void doCatalogue() {
+      JFrame catalogueFrame = new JFrame("CATALOGUE ");
+      JPanel panel = new JPanel(new BorderLayout());
+      
+      // Define catalogue items. Replace these items with actual product details.
+      String[][] catalogueItems = {
+          {"0001", "40 inch LED HD tv", "269.00"},
+          {"0002", "DAB RADIO", "29.99"},
+          {"0003", "TOASTER", "19.99"},
+          {"0004" , "WATCH" ,"29.99"},
+          {"0005" , "DIGITAL CAMERA" ,"89.99"},
+          {"0006" , "MP3 PLAYER" ,"7.99"},
+          {"0007" , "32GB USB2 DRIVE" ,"6.99"},
+      };
+
+      // Column headers for the table
+      String[] columns = {"Product num", "ProductName", "Price", "Image"};
+
+      // Create a table model with the data and column names
+      DefaultTableModel model = new DefaultTableModel(catalogueItems, columns) {
+          @Override
+          public Class<?> getColumnClass(int column) {
+              if (column < 3) {
+                  return String.class;
+              } else {
+                  return ImageIcon.class;
+              }
+          }
+      };
+
+      // Initialize the table with the model
+      JTable catalogueTable = new JTable(model);
+      catalogueTable.setRowHeight(100); // Set row height to accommodate images
+
+      // Load images for each product
+      for (int i = 0; i < catalogueItems.length; i++) {
+          String productNum = catalogueItems[i][0];
+          ImageIcon image = getProductImage(productNum);
+          model.setValueAt(image, i, 3);
+      }
+
+      // Add the table to a JScrollPane and then to the panel
+      JScrollPane scrollPane = new JScrollPane(catalogueTable);
+      panel.add(scrollPane);
+
+      // Configure and display the JFrame
+      catalogueFrame.add(panel);
+      catalogueFrame.setSize(600, 400);
+      catalogueFrame.setVisible(true);
+  }
+
+  /**
+   * Retrieves an ImageIcon for a given product number.
+   * @param productNum The product number for which to fetch the image.
+   * @return ImageIcon of the product or null if not available.
+   */
+  private ImageIcon getProductImage(String productNum) {
+      try {
+          return theStock.getImage(productNum); // Fetch the image using the stock reader
+      } catch (StockException e) {
+          DEBUG.error("CustomerModel.getProductImage()\n%s", e.getMessage());
+          return null; // Return null if an exception occurs
+      }
+  }
 
 
  

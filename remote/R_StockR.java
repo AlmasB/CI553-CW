@@ -2,10 +2,15 @@ package remote;
 
 import catalogue.Product;
 import dbAccess.StockR;
+import debug.DEBUG;
 import middle.StockException;
 
 import javax.swing.*;
 import java.rmi.RemoteException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 // There can only be 1 ResultSet opened per statement
 // so no simultaneous use of the statement object
@@ -66,3 +71,11 @@ public class      R_StockR
   }
 
 }
+
+
+ 
+  
+
+ 
+
+

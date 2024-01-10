@@ -21,6 +21,9 @@ import middle.LocalMiddleFactory;
 import middle.MiddleFactory;
 
 import javax.swing.*;
+
+import catalogue.Music;
+
 import java.awt.*;
 
 
@@ -35,9 +38,21 @@ class Main
   // Change to false to reduce the number of duplicated clients
 
   private final static boolean many = false;        // Many clients? (Or minimal clients)
-
+  // Make musicPlayer a static member so it's accessible in the shutdown hook
+  private static Music musicPlayer = new Music();
+  
+  
   public static void main (String args[])       
   {
+	// Set up the shutdown hook
+      Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+          musicPlayer.closeClip();
+          System.out.println("Application is closing. Music player resources are released.");
+      }));
+
+      // Start playing music
+      musicPlayer.playMusic("C:/Users/zayan/OneDrive/Documents/Year 2/musicfile.wav");
+
     new Main().begin();
   }
 

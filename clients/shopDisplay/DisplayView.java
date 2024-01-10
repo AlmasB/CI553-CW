@@ -21,7 +21,7 @@ import java.util.Observer;
 public class DisplayView extends Canvas implements Observer
 {
   private static final long serialVersionUID = 1L;
-  private Font font = new Font("Monospaced",Font.BOLD,24);
+  private Font font = new Font("SansSerif", Font.BOLD, 20); // Change the font details as desired
   private int H = 300;         // Height of window 
   private int W = 400;         // Width  of window 
   private String textToDisplay = "";
@@ -128,7 +128,7 @@ public class DisplayView extends Canvas implements Observer
  
   public void drawActualScreen( Graphics2D g )  // Re draw contents 
   {
-    g.setPaint( Color.white );            // Paint Colour 
+    g.setPaint( Color.lightGray );            // Paint Colour 
     W = getWidth(); H = getHeight();      // Current size
     
     g.setFont( font );
