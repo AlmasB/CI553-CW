@@ -31,4 +31,6 @@ public interface OrderProcessing
          
   public Map<String,List<Integer>> getOrderState() // Display
          throws OrderException;
+
+public void setOrderState(Map<String, List<Integer>> changeOrderState);  //ME
 }

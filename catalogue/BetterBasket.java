@@ -16,7 +16,7 @@ public class BetterBasket extends Basket implements Serializable
   @Override
   public boolean add(Product p1) {                                 
 	  
-	  for(Product p2:this){                                                 //ME:
+	  for(Product p2:this){                                                 //
 		  if(p1.getProductNum().equals(p2.getProductNum())) {
 			  
 		    
@@ -44,5 +44,5 @@ public int compare(Product p1, Product p2) {
 }
 }
 
-  // You need to add code here
+  
 }
