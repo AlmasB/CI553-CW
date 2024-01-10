@@ -6,6 +6,7 @@ import debug.DEBUG;
 import middle.*;
 
 import java.util.Observable;
+import java.util.Set;
 
 /**
  * Implements the Model of the cashier client
@@ -24,6 +25,8 @@ public class CashierModel extends Observable
 
   private StockReadWriter theStock     = null;
   private OrderProcessing theOrder     = null;
+  
+             //ME       
 
   /**
    * Construct the model of the Cashier
@@ -91,7 +94,7 @@ public class CashierModel extends Observable
             "CashierModel.doCheck", e.getMessage() );
       theAction = e.getMessage();
     }
-    setChanged(); notifyObservers(theAction);
+    setChanged(); notifyObservers(theAction); 
   }
 
   /**
@@ -131,6 +134,37 @@ public class CashierModel extends Observable
     setChanged(); notifyObservers(theAction);
   }
   
+  
+  public void doDiscount() {
+	  if(theBasket != null) {
+		  double discountPercentage = 5.0;
+		  
+		  for (Product product:theBasket) {
+			  double originalPrice = product.getPrice();
+			  double discountedPrice = originalPrice * (1.0 - discountPercentage/100.0);
+			  product.setPrice(discountedPrice);
+			 
+			  
+		  }
+		  
+		  setChanged();
+		  notifyObservers(String.format("Club member discount applied. New Total: %/2f", calculateTotal()));
+	  }
+	  
+  }
+  
+  double calculateTotal() {
+	    double total = 0.0;
+	    if (theBasket != null) {
+	        for (Product product : theBasket) {
+	            total += product.getPrice() * product.getQuantity();
+	        }
+	    }
+	    return total;
+	}
+  
+  
+  
   /**
    * Customer pays for the contents of the basket
    */
@@ -158,6 +192,13 @@ public class CashierModel extends Observable
     theBasket = null;
     setChanged(); notifyObservers(theAction); // Notify
   }
+  
+  
+ 
+ 
+  
+ 
+  
 
   /**
    * ask for update of view callled at start of day
