@@ -22,6 +22,9 @@ public class CollectView implements Observer
   private static final int W = 400;       // Width  of window pixels
 
   private final JLabel      theAction  = new JLabel();
+ 
+  private final JTextField  theOrdersPicked = new JTextField();      // ME: Area for Picked orders are displayed  
+  
   private final JTextField  theInput   = new JTextField();
   private final JTextArea   theOutput  = new JTextArea();
   private final JScrollPane theSP      = new JScrollPane();
@@ -62,7 +65,7 @@ public class CollectView implements Observer
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area
     theAction.setText( "" );                        // Blank
     cp.add( theAction );                            //  Add to canvas
-
+    
     theInput.setBounds( 110, 50, 270, 40 );         // Input Area
     theInput.setText("");                           // Blank
     cp.add( theInput );                             //  Add to canvas
@@ -86,14 +89,22 @@ public class CollectView implements Observer
    * @param modelC   The observed model
    * @param arg      Specific args 
    */
+  
+ 
+	 
+ 
+  
+  
   @Override 
   public void update( Observable modelC, Object arg )
   {
     CollectModel model  = (CollectModel) modelC;
     String        message = (String) arg;
     theAction.setText( message );
+  
+                        
     
-    theOutput.setText( model.getResponce() );
+        theOutput.setText( model.getResponce() );
     theInput.requestFocus();               // Focus is here
   }
 

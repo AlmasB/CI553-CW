@@ -14,8 +14,9 @@ import java.util.concurrent.atomic.AtomicReference;
  * Implements the Model of the warehouse pick client
  * @author  Mike Smith University of Brighton
  * @version 1.0
+ * @param <OrderPickedListener>
  */
-public class PickModel extends Observable
+public class PickModel<OrderPickedListener> extends Observable
 {
   private AtomicReference<Basket> theBasket = new AtomicReference<>(); 
 
@@ -120,6 +121,17 @@ public class PickModel extends Observable
     return theBasket.get();
   }
 
+  
+
+
+  
+  
+  
+  
+  
+ 
+  
+  
   /**
    * Process a picked Order
    */
@@ -135,7 +147,13 @@ public class PickModel extends Observable
         int no = basket.getOrderNum();        //  Order no
         theOrder.informOrderPicked( no );     //  Tell system
         theAction = "";                       //  Inform picker
-        worker.free();                        //  Can pick some more
+        worker.free();      
+     
+    //////////////////////////////////////////  
+     
+       
+        
+                                               //  Can pick some more
       } else {                                // F 
         theAction = "No order to pick";       //   Not picked order
       }
@@ -148,6 +166,9 @@ public class PickModel extends Observable
     }
     setChanged(); notifyObservers(theAction);
   }
+   
+  
+  
 }
 
 

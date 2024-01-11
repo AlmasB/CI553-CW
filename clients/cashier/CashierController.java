@@ -46,4 +46,9 @@ public class CashierController
   {
     model.doBought();
   }
+  
+  public void doDiscount() {                //ME: Discount feature added
+	  
+	  model.doDiscount();
+  }
 }
