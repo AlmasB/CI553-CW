@@ -3,8 +3,9 @@ import clients.backDoor.BackDoorController;
 import clients.backDoor.BackDoorModel;
 import clients.backDoor.BackDoorView;
 import clients.cashier.CashierController;
-import clients.cashier.CashierModel;
+//import clients.cashier.CashierModel; // No longer needed
 import clients.cashier.CashierView;
+import clients.cashier.BetterCashierModel;
 import clients.collection.CollectController;
 import clients.collection.CollectModel;
 import clients.collection.CollectView;
@@ -91,7 +92,7 @@ class Main
     window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
     Dimension pos = PosOnScrn.getPos();
     
-    CashierModel model      = new CashierModel(mlf);
+    BetterCashierModel model      = new BetterCashierModel(mlf);
     CashierView view        = new CashierView( window, mlf, pos.width, pos.height );
     CashierController cont  = new CashierController( model, view );
     view.setController( cont );
