@@ -1,5 +1,6 @@
 package clients.shopDisplay;
 
+import com.sun.tools.javac.Main;
 import middle.MiddleFactory;
 import middle.Names;
 import middle.RemoteMiddleFactory;

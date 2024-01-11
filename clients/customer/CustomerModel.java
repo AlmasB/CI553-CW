@@ -2,12 +2,15 @@ package clients.customer;
 
 import catalogue.Basket;
 import catalogue.Product;
+import clients.AudioPlayer;
+import clients.Main;
+import dbAccess.KeywordSearch;
 import debug.DEBUG;
 import middle.MiddleFactory;
 import middle.OrderProcessing;
 import middle.StockException;
 import middle.StockReader;
-
+import java.sql.*;
 import javax.swing.*;
 import java.util.Observable;
 
@@ -21,8 +24,9 @@ public class CustomerModel extends Observable
   private Product     theProduct = null;          // Current product
   private Basket      theBasket  = null;          // Bought items
 
-  private String      pn = "";                    // Product being processed
+  private Main main = new Main();
 
+  private String      pn = "";                    // Product being processed
   private StockReader     theStock     = null;
   private OrderProcessing theOrder     = null;
   private ImageIcon       thePic       = null;
@@ -57,8 +61,10 @@ public class CustomerModel extends Observable
    * Check if the product is in Stock
    * @param productNum The product number
    */
-  public void doCheck(String productNum )
+  public void doCheck(String productNum)
   {
+    KeywordSearch search = new KeywordSearch();
+
     theBasket.clear();                          // Clear s. list
     String theAction = "";
     pn  = productNum.trim();                    // Product no.
@@ -93,6 +99,7 @@ public class CustomerModel extends Observable
       e.getMessage() );
     }
     setChanged(); notifyObservers(theAction);
+
   }
 
   /**
@@ -106,7 +113,13 @@ public class CustomerModel extends Observable
     thePic = null;                            // No picture
     setChanged(); notifyObservers(theAction);
   }
-  
+
+  public void goBack(){
+    main.startup();
+
+
+  }
+
   /**
    * Return a picture of the product
    * @return An instance of an ImageIcon

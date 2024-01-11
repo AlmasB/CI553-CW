@@ -3,11 +3,13 @@ package clients.customer;
 import catalogue.Basket;
 import catalogue.BetterBasket;
 import clients.Picture;
+import dbAccess.KeywordSearch;
 import middle.MiddleFactory;
 import middle.StockReader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,15 +27,18 @@ public class CustomerView implements Observer
     public static final String CLEAR  = "Clear";
   }
 
-  private static final int H = 300;       // Height of window pixels
-  private static final int W = 400;       // Width  of window pixels
+  private static final int H = 500;       // Height of window pixels
+  private static final int W = 825;       // Width  of window pixels
+
 
   private final JLabel      theAction  = new JLabel();
+  private final JLabel      searchText = new JLabel("Search: "); // Search Text
   private final JTextField  theInput   = new JTextField();
   private final JTextArea   theOutput  = new JTextArea();
   private final JScrollPane theSP      = new JScrollPane();
   private final JButton     theBtCheck = new JButton( Name.CHECK );
   private final JButton     theBtClear = new JButton( Name.CLEAR );
+  public final JButton backButton = new JButton("Back");
 
   private Picture thePicture = new Picture(80,80);
   private StockReader theStock   = null;
@@ -62,14 +67,19 @@ public class CustomerView implements Observer
     rootWindow.setSize( W, H );                     // Size of Window
     rootWindow.setLocation( x, y );
 
-    Font f = new Font("Monospaced",Font.PLAIN,12);  // Font f is
+    Font f = new Font("Monospaced",Font.PLAIN,16);  // Font f is
 
-    theBtCheck.setBounds( 16, 25+60*0, 80, 40 );    // Check button
+
+
+    theBtCheck.setBounds( 16, 350, 80, 40 );    // Check button
     theBtCheck.addActionListener(                   // Call back code
       e -> cont.doCheck( theInput.getText() ) );
     cp.add( theBtCheck );                           //  Add to canvas
 
-    theBtClear.setBounds( 16, 25+60*1, 80, 40 );    // Clear button
+    searchText.setBounds(50, 50, 80, 40 ); // set text bounds
+    cp.add(searchText);                             // Add to canvas
+
+    theBtClear.setBounds( 16, 400, 80, 40 );    // Clear button
     theBtClear.addActionListener(                   // Call back code
       e -> cont.doClear() );
     cp.add( theBtClear );                           //  Add to canvas
@@ -82,16 +92,19 @@ public class CustomerView implements Observer
     theInput.setText("");                           // Blank
     cp.add( theInput );                             //  Add to canvas
     
-    theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
+    theSP.setBounds( 110, 100, 570, 360 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
     theOutput.setFont( f );                         //  Uses font  
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
 
-    thePicture.setBounds( 16, 25+60*2, 80, 80 );   // Picture area
+    thePicture.setBounds( 16, 25+60*2, 110, 110 );   // Picture area
     cp.add( thePicture );                           //  Add to canvas
     thePicture.clear();
-    
+
+    backButton.setBounds(700, 400, 100, 50); // set button bounds
+    cp.add(backButton);
+    backButton.addActionListener(  e -> cont.goBack());
     rootWindow.setVisible( true );                  // Make visible);
     theInput.requestFocus();                        // Focus is here
   }
@@ -126,6 +139,7 @@ public class CustomerView implements Observer
     }
     theOutput.setText( model.getBasket().getDetails() );
     theInput.requestFocus();               // Focus is here
+
   }
 
 }

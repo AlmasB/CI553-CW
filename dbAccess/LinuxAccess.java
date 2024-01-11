@@ -1,4 +1,5 @@
 package dbAccess;
+import java.sql.*;
 
 /**
   * Implements management of an mySQL database on Linux.
@@ -9,11 +10,16 @@ class LinuxAccess extends DBAccess
 {
   public void loadDriver() throws Exception
   {
-    Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+    Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+
   }
 
   public String urlOfDatabase()
   {
-    return "jdbc:mysql://localhost/cshop?user=root";
+    return "jdbc:mysql://lb1587_CatShop:Twothousandandfour007@lb1587.brighton.domains/lb1587_CatShop";
   }
+
+
 }
+
+
