@@ -37,6 +37,13 @@ public class CustomerController
   {
     model.doClear();
   }
+  
+  /**
+   * Remove interaction from view
+   */
+  public void doRemove(String pr) {
+	  model.doRemove(pr);
+  }
 
   
 }

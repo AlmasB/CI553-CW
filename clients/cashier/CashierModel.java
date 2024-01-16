@@ -195,7 +195,7 @@ public class CashierModel extends Observable
    */
   protected Basket makeBasket()
   {
-    return new BetterBasket();
+    return new Basket();
   }
 }
   

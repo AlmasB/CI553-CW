@@ -42,7 +42,7 @@ public class BetterBasket extends Basket implements Serializable
 				//product found, decrement quantity 
 				int newQuantity = p2.getQuantity() - p1.getQuantity();
 				if (newQuantity < 0) {
-					//Remove prod if quantity is <= 0.
+					//Remove product if quantity is <= 0.
 					this.remove(p2);
 					return true;
 				} else {
@@ -68,21 +68,7 @@ public class BetterBasket extends Basket implements Serializable
 	  }
 	
   
-//	// improved method of removing item from basket
-//	@Override
-//  public boolean remove (Product pr) {
-//	  int j = 0;
-//	  boolean removeItem = false;
-//	  
-//	  while(j<this.size()) {
-//		  if()
-//			  this.get(j).setQuantity(this.get(j).getQuantity() - pr.getQuantity()); 
-//		  
-//	  }
-//	return removeItem;
-//	  
-//  }
-	
+
 	  
 	// create method to check if item is within basket
 	public boolean itemList(Product pr) {

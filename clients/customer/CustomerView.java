@@ -23,7 +23,8 @@ public class CustomerView implements Observer
   {
     public static final String CHECK  = "Check";
     public static final String CLEAR  = "Clear";
-  }
+    public static final String REMOVE = "Remove";
+    }
 
   private static final int H = 300;       // Height of window pixels
   private static final int W = 400;       // Width  of window pixels
@@ -34,6 +35,7 @@ public class CustomerView implements Observer
   private final JScrollPane theSP      = new JScrollPane();
   private final JButton     theBtCheck = new JButton( Name.CHECK );
   private final JButton     theBtClear = new JButton( Name.CLEAR );
+  private final JButton theBtnRemove = new JButton(Name.REMOVE);
 
   private Picture thePicture = new Picture(80,80);
   private StockReader theStock   = null;
@@ -64,7 +66,7 @@ public class CustomerView implements Observer
 
     Font f = new Font("Monospaced",Font.PLAIN,12);  // Font f is
 
-    theBtCheck.setBounds( 16, 25+60*0, 80, 40 );    // Check button
+    theBtCheck.setBounds( 16, 25+60*0, 80, 40 );    // Check button 
     theBtCheck.addActionListener(                   // Call back code
       e -> cont.doCheck( theInput.getText() ) );
     cp.add( theBtCheck );                           //  Add to canvas
@@ -74,6 +76,13 @@ public class CustomerView implements Observer
       e -> cont.doClear() );
     cp.add( theBtClear );                           //  Add to canvas
 
+    theBtnRemove.setBounds(16, 25+60*2, 80, 40); // setting position + size of the removal button
+    theBtnRemove.addActionListener(
+    		e -> cont.doRemove(theInput.getText()) //perform action on removing
+    		);
+    cp.add(theBtnRemove);
+    
+    
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area
     theAction.setText( "" );                        //  Blank
     cp.add( theAction );                            //  Add to canvas
@@ -88,7 +97,7 @@ public class CustomerView implements Observer
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
 
-    thePicture.setBounds( 16, 25+60*2, 80, 80 );   // Picture area
+    thePicture.setBounds( 16, 25+60*3, 80, 80 );   // Picture area
     cp.add( thePicture );                           //  Add to canvas
     thePicture.clear();
     

@@ -1,6 +1,7 @@
 package clients.customer;
 
 import catalogue.Basket;
+import catalogue.BetterBasket;
 import catalogue.Product;
 import debug.DEBUG;
 import middle.MiddleFactory;
@@ -13,8 +14,8 @@ import java.util.Observable;
 
 /**
  * Implements the Model of the customer client
- * @author  Mike Smith University of Brighton
- * @version 1.0
+ * @author  Mike Smith University of Brighton - adjusted by Masroor Rahman UOB
+ * @version 1.0 - 1.1
  */
 public class CustomerModel extends Observable
 {
@@ -132,5 +133,18 @@ public class CustomerModel extends Observable
   {
     return new Basket();
   }
-}
+  
+  //attempt to map remove button in customer model using doRemove method
+
+  public void doRemove(String productNum) {
+	  String actionPhase = "";
+	  boolean productRemoved = false;
+	  
+	  // trim() ensures no mismatch may occur on product number
+	  productNum = productNum.trim(); 
+	  
+	  //synchronising ensures basket is adjusted properly when multiple threads are manipulating it.
+	  synchronised(this)
+	  }
+  }
 
