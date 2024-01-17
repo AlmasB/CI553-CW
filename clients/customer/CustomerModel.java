@@ -134,17 +134,37 @@ public class CustomerModel extends Observable
     return new Basket();
   }
   
-  //attempt to map remove button in customer model using doRemove method
+  
+	// attempt to map remove button in customer model using doRemove method
+	public void doRemove(String productNum) {
+		String actionPhase = "";
+		boolean productRemoved = false;
 
-  public void doRemove(String productNum) {
-	  String actionPhase = "";
-	  boolean productRemoved = false;
-	  
-	  // trim() ensures no mismatch may occur on product number
-	  productNum = productNum.trim(); 
-	  
-	  //synchronising ensures basket is adjusted properly when multiple threads are manipulating it.
-	  synchronised(this)
-	  }
+		// trim() ensures no mismatch may occur on product number
+		productNum = productNum.trim();
+
+		// synchronising ensures basket is adjusted properly when multiple threads are
+		// manipulating it.
+		synchronized (this) {
+
+			for (int i = 0; i < theBasket.size(); i++) { // iterate over items within basket
+				Product p = theBasket.get(i);
+
+				if (p.getProductNum().equals(productNum)) { // check for product nums
+					theBasket.remove(i); // product removed
+					productRemoved = true;
+					break; // break out of loop once product has been found
+				}
+			}
+		}
+		if (productRemoved) {
+			actionPhase = "Removed product: " + productNum;
+		} else {
+			actionPhase = "Product does not exist within basket: " + productNum;
+		}
+		// notify observers of action phase
+		setChanged();
+		notifyObservers(actionPhase);
+	}
   }
 
