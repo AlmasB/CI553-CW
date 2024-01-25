@@ -1,13 +1,10 @@
 package clients.customer;
 
-import clients.customer.CustomerController;
-import clients.customer.CustomerModel;
-import clients.customer.CustomerView;
+import javax.swing.JFrame;
+
 import middle.MiddleFactory;
 import middle.Names;
 import middle.RemoteMiddleFactory;
-
-import javax.swing.*;
 
 /**
  * The standalone Customer Client
